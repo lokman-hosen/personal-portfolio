@@ -35,6 +35,22 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
+                    <li class="nav-item">
+                        <router-link to="/" class="nav-link" exact>
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Gallery
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item">
+                        <router-link to="/user" class="nav-link" exact>
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Users</p>
+                        </router-link>
+                    </li>
+
                     <li class="nav-item menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
