@@ -2437,7 +2437,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //window.
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-console.log('hello');
 var app = new vue__WEBPACK_IMPORTED_MODULE_2__.default({
   el: '#app',
   router: _router__WEBPACK_IMPORTED_MODULE_1__.default,
