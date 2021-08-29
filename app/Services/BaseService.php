@@ -104,5 +104,10 @@ class BaseService
     }
 
 
+    public function getPaginatedDate(){
+        return $this->model->latest()->get();
+    }
+
+
 
 }

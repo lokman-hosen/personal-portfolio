@@ -36,7 +36,7 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <router-link to="/" class="nav-link" exact>
+                        <router-link to="/home" class="nav-link" exact>
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Gallery

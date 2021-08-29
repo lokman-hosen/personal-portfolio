@@ -9,7 +9,7 @@ Vue.use(Router)
 
 const routes = [
     {
-        path: '/',
+        path: '/home',
         name: 'home',
         component: Dashboard
     },
@@ -20,7 +20,7 @@ const routes = [
     },
     {
         path: '/category',
-        //name: 'user',
+        name: 'category',
         component: CategoryList
     },
 ]
@@ -28,7 +28,8 @@ const routes = [
 // keep it simple for now.
 const router = new Router({
     routes, // short for `routes: routes`
-    linkActiveClass: 'active'
+    linkActiveClass: 'active',
+    //mode: 'history'
 })
 
 export default router;

@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+    protected $service;
+    public function __construct(CategoryService $categoryService){
+        $this->service = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->service->getPaginatedDate();
+        if ($categories){
+            return response()->json(['status' => true, 'data' => $categories, 'message' => 'Category List',]);
+        }
     }
 
     /**
