@@ -22,14 +22,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="category in categories" :key="category.id">
-                            <td>{{ category.id }}</td>
-                            <td>{{ category.name }}</td>
+                        <tr v-for="(category, index) in categories" :key="category.id">
+                            <td>{{index+1}}</td>
+                            <td>{{category.name}}</td>
                             <td>
                                 <span v-if="category.status" class="badge bg-success">Approved</span>
                                 <span v-else class="badge bg-danger">Pending</span>
                             </td>
-                            <td>Action</td>
+                            <td>
+                                a
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -105,9 +107,13 @@ export default {
                        title: 'Category Created successfully'
                    })
                    // reset form value
-                   $(':input').val('');
+                  // $(':input').val('');
+                   $('.modal').on('hidden.bs.modal', function(){
+                       $(this).find('form')[0].reset();
+                   });
                     // hide the modal
                    $('#createModal').modal('hide');
+                   this.loadPostCategory()
                }
             })
             .catch((error)=>{

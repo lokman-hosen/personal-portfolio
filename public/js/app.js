@@ -2356,6 +2356,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2394,10 +2396,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       icon: 'success',
                       title: 'Category Created successfully'
                     }); // reset form value
+                    // $(':input').val('');
 
-                    $(':input').val(''); // hide the modal
+                    $('.modal').on('hidden.bs.modal', function () {
+                      $(this).find('form')[0].reset();
+                    }); // hide the modal
 
                     $('#createModal').modal('hide');
+
+                    _this2.loadPostCategory();
                   }
                 })["catch"](function (error) {
                   console.log(error);
@@ -38911,9 +38918,9 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.categories, function(category) {
+            _vm._l(_vm.categories, function(category, index) {
               return _c("tr", { key: category.id }, [
-                _c("td", [_vm._v(_vm._s(category.id))]),
+                _c("td", [_vm._v(_vm._s(index + 1))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(category.name))]),
                 _vm._v(" "),
@@ -38927,7 +38934,11 @@ var render = function() {
                       ])
                 ]),
                 _vm._v(" "),
-                _c("td", [_vm._v("Action")])
+                _c("td", [
+                  _vm._v(
+                    "\n                            a\n                        "
+                  )
+                ])
               ])
             }),
             0
