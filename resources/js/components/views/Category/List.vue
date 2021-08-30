@@ -7,7 +7,7 @@
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fa fa-plus"></i> Add New</button>
+                            <button type="button" class="btn btn-info" @click="createModal"><i class="fa fa-plus"></i> Add New</button>
                         </div>
                     </div>
                 </div>
@@ -30,6 +30,7 @@
                                 <span v-else class="badge bg-danger">Pending</span>
                             </td>
                             <td>
+                                <a href="#" title="Edit" @click="editModal(category)"><i class="fa fa-edit"></i> </a>
                                 <a href="#" title="Delete" @click="deleteCategory(category.id)"><i class="fa fa-trash"></i> </a>
                             </td>
                         </tr>
@@ -46,16 +47,25 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createModalLabel">Modal title</h5>
+                        <h5 class="modal-title" v-show="!editMode">Create Category</h5>
+                        <h5 class="modal-title" v-show="editMode">Edit Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <form @submit.prevent="saveCategory">
+<!--                    editMode ? updateCategory : saveCategory-->
+                    <form @submit.prevent="editMode ? updateCategory() : saveCategory()">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="categoryname" class="form-label">Name</label>
                                 <input type="text" id="categoryname" class="form-control" name="name" v-model="form.name" placeholder="Enter Category Name">
                                 <div class="text-danger" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                            </div>
+                            <div v-if="editMode" class="mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" name="status" v-model="form.status" aria-label="Default select example">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                                <div class="text-danger" v-if="form.errors.has('status')" v-html="form.errors.get('status')" />
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -78,8 +88,11 @@ export default {
     name: "List",
     data(){
         return {
+            editMode: true,
             form: new Form({
+                id: '',
                 name: '',
+                status: 1,
             }),
 
             categories: [],
@@ -97,7 +110,20 @@ export default {
             });
         },
 
+        createModal(){
+            this.editMode = false,
+            this.form.reset();
+            $('#createModal').modal('show');
+        },
+        editModal(category){
+            this.editMode = true,
+                //fill form with old data
+            this.form.fill(category);
+            $('#createModal').modal('show');
+        },
+
         async saveCategory(){
+            alert('Save')
             //const response = await this.form.post('api/category')
            this.form.post('api/category')
             .then((response)=>{
@@ -119,6 +145,34 @@ export default {
             })
             .catch((error)=>{
                 console.log(error)
+            })
+        },
+
+        updateCategory(){
+            //console.log('update')
+            this.form.put('api/category/'+this.form.id).then((response)=>{
+                if (response.data.status){
+                    toast.fire({
+                        icon: 'success',
+                        title: 'Category Updated successfully'
+                    })
+                    // reset form value
+                    // $(':input').val('');
+                    $('.modal').on('hidden.bs.modal', function(){
+                        $(this).find('form')[0].reset();
+                    });
+                    // hide the modal
+                    $('#createModal').modal('hide');
+                    //load new data
+                    this.loadPostCategory()
+                }
+            })
+            .catch((error)=>{
+                console.log(error)
+                /*toast.fire({
+                    icon: 'error',
+                    title: 'Error To Updated Category'
+                })*/
             })
         },
 

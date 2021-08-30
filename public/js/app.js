@@ -2358,14 +2358,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "List",
   data: function data() {
     return {
+      editMode: true,
       form: new vform__WEBPACK_IMPORTED_MODULE_2__.default({
-        name: ''
+        id: '',
+        name: '',
+        status: 1
       }),
       categories: []
     };
@@ -2381,6 +2394,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         console.log(error);
       });
     },
+    createModal: function createModal() {
+      this.editMode = false, this.form.reset();
+      $('#createModal').modal('show');
+    },
+    editModal: function editModal(category) {
+      this.editMode = true, //fill form with old data
+      this.form.fill(category);
+      $('#createModal').modal('show');
+    },
     saveCategory: function saveCategory() {
       var _this2 = this;
 
@@ -2389,7 +2411,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                //const response = await this.form.post('api/category')
+                alert('Save'); //const response = await this.form.post('api/category')
+
                 _this2.form.post('api/category').then(function (response) {
                   if (response.data.status) {
                     toast.fire({
@@ -2410,7 +2433,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(error);
                 });
 
-              case 1:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -2418,8 +2441,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    deleteCategory: function deleteCategory(id) {
+    updateCategory: function updateCategory() {
       var _this3 = this;
+
+      //console.log('update')
+      this.form.put('api/category/' + this.form.id).then(function (response) {
+        if (response.data.status) {
+          toast.fire({
+            icon: 'success',
+            title: 'Category Updated successfully'
+          }); // reset form value
+          // $(':input').val('');
+
+          $('.modal').on('hidden.bs.modal', function () {
+            $(this).find('form')[0].reset();
+          }); // hide the modal
+
+          $('#createModal').modal('hide'); //load new data
+
+          _this3.loadPostCategory();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        /*toast.fire({
+            icon: 'error',
+            title: 'Error To Updated Category'
+        })*/
+      });
+    },
+    deleteCategory: function deleteCategory(id) {
+      var _this4 = this;
 
       swal.fire({
         title: 'Are you sure?',
@@ -2432,10 +2483,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }).then(function (result) {
         if (result.isConfirmed) {
           //delete item
-          _this3.form["delete"]('api/category/' + id).then(function () {
+          _this4.form["delete"]('api/category/' + id).then(function () {
             swal.fire('Deleted!', 'Your file has been deleted.', 'success');
 
-            _this3.loadPostCategory();
+            _this4.loadPostCategory();
           })["catch"](function () {
             swal.fire({
               icon: 'error',
@@ -38939,10 +38990,35 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-12" }, [
       _c("div", { staticClass: "card" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "card-header" }, [
+          _c("h3", { staticClass: "card-title" }, [
+            _vm._v("Responsive Hover Table 55")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-tools" }, [
+            _c(
+              "div",
+              {
+                staticClass: "input-group input-group-sm",
+                staticStyle: { width: "150px" }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    attrs: { type: "button" },
+                    on: { click: _vm.createModal }
+                  },
+                  [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Add New")]
+                )
+              ]
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover text-nowrap" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "tbody",
@@ -38963,6 +39039,19 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#", title: "Edit" },
+                      on: {
+                        click: function($event) {
+                          return _vm.editModal(category)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-edit" })]
+                  ),
+                  _vm._v(" "),
                   _c(
                     "a",
                     {
@@ -38998,7 +39087,48 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-lg" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(2),
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h5",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.editMode,
+                      expression: "!editMode"
+                    }
+                  ],
+                  staticClass: "modal-title"
+                },
+                [_vm._v("Create Category")]
+              ),
+              _vm._v(" "),
+              _c(
+                "h5",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.editMode,
+                      expression: "editMode"
+                    }
+                  ],
+                  staticClass: "modal-title"
+                },
+                [_vm._v("Edit Category")]
+              ),
+              _vm._v(" "),
+              _c("button", {
+                staticClass: "btn-close",
+                attrs: {
+                  type: "button",
+                  "data-bs-dismiss": "modal",
+                  "aria-label": "Close"
+                }
+              })
+            ]),
             _vm._v(" "),
             _c(
               "form",
@@ -39006,7 +39136,7 @@ var render = function() {
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    return _vm.saveCategory.apply(null, arguments)
+                    _vm.editMode ? _vm.updateCategory() : _vm.saveCategory()
                   }
                 }
               },
@@ -39057,7 +39187,71 @@ var render = function() {
                           }
                         })
                       : _vm._e()
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.editMode
+                    ? _c("div", { staticClass: "mb-3" }, [
+                        _c("label", { staticClass: "form-label" }, [
+                          _vm._v("Status")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.status,
+                                expression: "form.status"
+                              }
+                            ],
+                            staticClass: "form-select",
+                            attrs: {
+                              name: "status",
+                              "aria-label": "Default select example"
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "status",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("Active")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Inactive")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.form.errors.has("status")
+                          ? _c("div", {
+                              staticClass: "text-danger",
+                              domProps: {
+                                innerHTML: _vm._s(_vm.form.errors.get("status"))
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-footer" }, [
@@ -39092,40 +39286,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("Responsive Hover Table 55")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-tools" }, [
-        _c(
-          "div",
-          {
-            staticClass: "input-group input-group-sm",
-            staticStyle: { width: "150px" }
-          },
-          [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-info",
-                attrs: {
-                  type: "button",
-                  "data-bs-toggle": "modal",
-                  "data-bs-target": "#createModal"
-                }
-              },
-              [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Add New")]
-            )
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("ID")]),
@@ -39136,27 +39296,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "createModalLabel" } },
-        [_vm._v("Modal title")]
-      ),
-      _vm._v(" "),
-      _c("button", {
-        staticClass: "btn-close",
-        attrs: {
-          type: "button",
-          "data-bs-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      })
     ])
   }
 ]

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -63,7 +64,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'status' => 'required',
+            'name' => [
+                'required',
+                Rule::unique('categories')->ignore($id),
+            ],
+        ]);
+        $category = $this->service->update($request->all(), $id);
+        if ($category){
+            return response()->json(['status' => true,  'message' => 'Category Updated Successfully']);
+        }
     }
 
     /**
