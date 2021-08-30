@@ -51,7 +51,6 @@
                         <h5 class="modal-title" v-show="editMode">Edit Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-<!--                    editMode ? updateCategory : saveCategory-->
                     <form @submit.prevent="editMode ? updateCategory() : saveCategory()">
                         <div class="modal-body">
                             <div class="mb-3">
