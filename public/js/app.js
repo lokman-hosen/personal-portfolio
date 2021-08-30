@@ -2430,21 +2430,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       }).then(function (result) {
-        //delete item
-        _this3.form["delete"]('api/category/' + id).then(function () {
-          if (result.isConfirmed) {
+        if (result.isConfirmed) {
+          //delete item
+          _this3.form["delete"]('api/category/' + id).then(function () {
             swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-          } //load new data
 
-
-          _this3.loadPostCategory();
-        })["catch"](function () {
-          swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!'
+            _this3.loadPostCategory();
+          })["catch"](function () {
+            swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!'
+            });
           });
-        });
+        }
       });
     }
   },

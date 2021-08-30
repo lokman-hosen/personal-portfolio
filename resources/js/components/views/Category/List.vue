@@ -132,26 +132,24 @@ export default {
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
-                //delete item
-                this.form.delete('api/category/'+id).then(()=>{
-                    if (result.isConfirmed) {
+                if (result.isConfirmed) {
+                    //delete item
+                    this.form.delete('api/category/'+id).then(()=>{
                         swal.fire(
                             'Deleted!',
                             'Your file has been deleted.',
                             'success'
                         )
-                    }
-                    //load new data
-                    this.loadPostCategory();
-                })
-                .catch(()=>{
-                    swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
+                        this.loadPostCategory();
                     })
-                })
-
+                    .catch(()=>{
+                        swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        })
+                    })
+                }
             })
         }
     },
