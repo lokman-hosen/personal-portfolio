@@ -2402,7 +2402,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       $(this).find('form')[0].reset();
                     }); // hide the modal
 
-                    $('#createModal').modal('hide');
+                    $('#createModal').modal('hide'); //load new data
 
                     _this2.loadPostCategory();
                   }
@@ -2417,6 +2417,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    deleteCategory: function deleteCategory(id) {
+      var _this3 = this;
+
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        //delete item
+        _this3.form["delete"]('api/category/' + id).then(function () {
+          if (result.isConfirmed) {
+            swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+          } //load new data
+
+
+          _this3.loadPostCategory();
+        })["catch"](function () {
+          swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!'
+          });
+        });
+      });
     }
   },
   created: function created() {
@@ -38935,8 +38964,17 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", [
-                  _vm._v(
-                    "\n                            a\n                        "
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#", title: "Delete" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteCategory(category.id)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-trash" })]
                   )
                 ])
               ])

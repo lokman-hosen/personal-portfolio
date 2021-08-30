@@ -21,7 +21,7 @@ class CategoryController extends Controller
     {
         $categories = $this->service->getPaginatedDate();
         if ($categories){
-            return response()->json(['status' => true, 'data' => $categories, 'message' => 'Category List',]);
+            return response()->json(['status' => true, 'data' => $categories, 'message' => 'Category List']);
         }
     }
 
@@ -39,7 +39,7 @@ class CategoryController extends Controller
 
         $category = $this->service->create($request->all());
         if ($category){
-            return response()->json(['status' => true, 'data' => $category, 'message' => 'Category Created',]);
+            return response()->json(['status' => true, 'data' => $category, 'message' => 'Category Created']);
         }
     }
 
@@ -74,6 +74,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = $this->service->find($id);
+        $category->delete();
+        return response()->json(['status' => true, 'message' => 'Category Deleted Successfully']);
+
     }
 }

@@ -30,7 +30,7 @@
                                 <span v-else class="badge bg-danger">Pending</span>
                             </td>
                             <td>
-                                a
+                                <a href="#" title="Delete" @click="deleteCategory(category.id)"><i class="fa fa-trash"></i> </a>
                             </td>
                         </tr>
                         </tbody>
@@ -113,11 +113,45 @@ export default {
                    });
                     // hide the modal
                    $('#createModal').modal('hide');
+                   //load new data
                    this.loadPostCategory()
                }
             })
             .catch((error)=>{
                 console.log(error)
+            })
+        },
+
+        deleteCategory(id){
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                //delete item
+                this.form.delete('api/category/'+id).then(()=>{
+                    if (result.isConfirmed) {
+                        swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                    //load new data
+                    this.loadPostCategory();
+                })
+                .catch(()=>{
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                })
+
             })
         }
     },
