@@ -94,24 +94,25 @@ export default {
                 console.log(error);
             });
         },
-       /* saveCategory () {
-            // Submit the form via a POST request
-            this.form.post('api/category')
-                .then(({ data }) => { console.log(data) })
-        },*/
 
         async saveCategory(){
             //const response = await this.form.post('api/category')
-            const response = this.form.post('api/category')
-            if (this.form.successful){
-                this.form.reset();
-                //$('#createModal').mo
-                //$('#createModal').modal().hide();
-
-            }
-            console.log('My Message'+ this.form.successful)
-            console.log(response)
-
+           this.form.post('api/category')
+            .then((response)=>{
+               if (response.data.status){
+                   toast.fire({
+                       icon: 'success',
+                       title: 'Category Created successfully'
+                   })
+                   // reset form value
+                   $(':input').val('');
+                    // hide the modal
+                   $('#createModal').modal('hide');
+               }
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
         }
     },
 

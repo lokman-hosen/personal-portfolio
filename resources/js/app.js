@@ -10,6 +10,23 @@ require('./bootstrap');
 import Vue  from "vue";
 import App from "./App";
 import router from "./router";
+// ES6 Modules or TypeScript
+// import sweet alert and declare globally
+import Swal from 'sweetalert2'
+window.swal = Swal;
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
+window.toast = Toast;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
