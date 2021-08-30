@@ -47,16 +47,18 @@
                         <h5 class="modal-title" id="createModalLabel">Modal title</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form>
+
+                    <form @submit.prevent="saveCategory">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter Category Name">
+                                <label for="categoryname" class="form-label">Name</label>
+                                <input type="text" id="categoryname" class="form-control" name="name" v-model="form.name" placeholder="Enter Category Name">
+                                <div class="text-danger" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary" :disabled="form.busy">Save</button>
                         </div>
                     </form>
                 </div>
@@ -68,16 +70,22 @@
 
 <script>
 import axios from "axios"
+import Form from 'vform'
+
 export default {
     name: "List",
     data(){
         return {
+            form: new Form({
+                name: '',
+            }),
+
             categories: [],
         }
     },
     methods: {
         loadPostCategory(){
-            axios.get('http://localhost:3003/api/category')
+            axios.get('api/category')
             .then(response => {
                 this.categories = response.data.data;
             })
@@ -86,6 +94,25 @@ export default {
                 console.log(error);
             });
         },
+       /* saveCategory () {
+            // Submit the form via a POST request
+            this.form.post('api/category')
+                .then(({ data }) => { console.log(data) })
+        },*/
+
+        async saveCategory(){
+            //const response = await this.form.post('api/category')
+            const response = this.form.post('api/category')
+            if (this.form.successful){
+                this.form.reset();
+                //$('#createModal').mo
+                //$('#createModal').modal().hide();
+
+            }
+            console.log('My Message'+ this.form.successful)
+            console.log(response)
+
+        }
     },
 
     created() {

@@ -29,7 +29,7 @@ const routes = [
 const router = new Router({
     routes, // short for `routes: routes`
     linkActiveClass: 'active',
-    //mode: 'history'
+    mode: 'history'
 })
 
 export default router;
