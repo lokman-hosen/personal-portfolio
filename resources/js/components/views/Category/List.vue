@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Category List</h3>
                     <div class="card-tools">
-                        <div class="input-group input-group-sm pt-1" style="width: 150px;">
+                        <div class="input-group input-group-sm pt-1 mr-2">
                             <button type="button" class="btn btn-sm btn-info" @click="createModal"><i class="fa fa-plus"></i> Add New</button>
                         </div>
                     </div>
@@ -29,44 +29,50 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-sm btn-primary p-1"><i class="fas fa-search"></i> Search</button>
+                            <button type="button" class="btn btn-sm btn-info p-1 ml-2" @click="reloadData"><i class="fas fa-sync"></i> Refresh</button>
+                        </div>
                     </form>
                     <!--filter form end -->
 
-                    <!-- table start -->
-                    <table class="table table-hover text-nowrap">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(category, index) in categories" :key="category.id">
-                            <td>{{index+1}}</td>
-                            <td>{{category.name}}</td>
-                            <td>
-                                <span v-if="category.status" class="badge bg-success">Approved</span>
-                                <span v-else class="badge bg-danger">Pending</span>
-                            </td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-info" title="Edit" @click="editModal(category)"><i class="fa fa-edit"></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger" title="Delete" @click="deleteCategory(category.id)"><i class="fa fa-trash"></i> </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- table end -->
+                    <div class="table-responsive">
+                        <!-- table start -->
+                        <table class="table table-hover mt-2">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(category, index) in categories" :key="category.id">
+                                <td>{{pagination.from+index}}</td>
+                                <td>{{category.name}}</td>
+                                <td>
+                                    <span v-if="category.status" class="badge bg-success">Approved</span>
+                                    <span v-else class="badge bg-danger">Pending</span>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-outline-info" title="Edit" @click="editModal(category)"><i class="fa fa-edit"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-danger" title="Delete" @click="deleteCategory(category.id)"><i class="fa fa-trash"></i> </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- table end -->
 
-                    <!-- pagination -->
-                    <pagination
-                        v-if="pagination.last_page > 1"
-                        :pagination="pagination"
-                        :offset="5"
-                        @paginate="getData()"
-                    ></pagination>
+                        <!-- pagination -->
+                        <pagination
+                            v-if="pagination.last_page > 1"
+                            :pagination="pagination"
+                            :offset="5"
+                            @paginate="getData()"
+                        ></pagination>
+                    </div>
+
                 </div>
                 </div>
                 <!-- /.card-body -->
@@ -255,6 +261,11 @@ export default {
         },
         filterData(){
             this.getData()
+        },
+        reloadData(){
+            this.filter.name = '';
+            this.filter.status = '';
+            this.getData();
         }
     },
 
