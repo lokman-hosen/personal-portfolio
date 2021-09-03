@@ -2452,6 +2452,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2467,14 +2494,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       categories: [],
       pagination: {
         current_page: 1
+      },
+      filter: {
+        name: '',
+        status: ''
       }
     };
   },
   methods: {
+    // get data
     getData: function getData() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/category?page=' + this.pagination.current_page).then(function (response) {
+      var filterData = {
+        params: {
+          name: this.filter.name,
+          status: this.filter.status
+        }
+      };
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/category?page=' + this.pagination.current_page, filterData).then(function (response) {
         _this.categories = response.data.data;
         _this.pagination = response.data.meta;
       })["catch"](function (error) {
@@ -2482,15 +2520,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         console.log(error);
       });
     },
+    //create modal
     createModal: function createModal() {
       this.editMode = false, this.form.reset();
       $('#createModal').modal('show');
     },
+    //edit modal
     editModal: function editModal(category) {
       this.editMode = true, //fill form with old data
       this.form.fill(category);
       $('#createModal').modal('show');
     },
+    //  save record
     saveCategory: function saveCategory() {
       var _this2 = this;
 
@@ -2506,7 +2547,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       icon: 'success',
                       title: 'Category Created successfully'
                     }); // reset form value
-                    // $(':input').val('');
 
                     $('.modal').on('hidden.bs.modal', function () {
                       $(this).find('form')[0].reset();
@@ -2528,10 +2568,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
+    // update record
     updateCategory: function updateCategory() {
       var _this3 = this;
 
-      //console.log('update')
       this.form.put('api/category/' + this.form.id).then(function (response) {
         if (response.data.status) {
           toast.fire({
@@ -2556,6 +2596,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         })*/
       });
     },
+    // delete record
     deleteCategory: function deleteCategory(id) {
       var _this4 = this;
 
@@ -2583,12 +2624,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           });
         }
       });
+    },
+    filterData: function filterData() {
+      this.getData();
     }
   },
 
   /*created() {
       this.getData()
   },*/
+  // load data when mount component
   mounted: function mounted() {
     this.getData();
   }
@@ -39810,104 +39855,217 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-12" }, [
-      _c(
-        "div",
-        { staticClass: "card" },
-        [
-          _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [_vm._v("Category List")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-tools" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "input-group input-group-sm pt-1",
-                  staticStyle: { width: "150px" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-info",
-                      attrs: { type: "button" },
-                      on: { click: _vm.createModal }
-                    },
-                    [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Add New")]
-                  )
-                ]
-              )
-            ])
-          ]),
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h3", { staticClass: "card-title" }, [_vm._v("Category List")]),
           _vm._v(" "),
-          _c("table", { staticClass: "table table-hover text-nowrap" }, [
-            _vm._m(0),
-            _vm._v(" "),
+          _c("div", { staticClass: "card-tools" }, [
             _c(
-              "tbody",
-              _vm._l(_vm.categories, function(category, index) {
-                return _c("tr", { key: category.id }, [
-                  _c("td", [_vm._v(_vm._s(index + 1))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(category.name))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    category.status
-                      ? _c("span", { staticClass: "badge bg-success" }, [
-                          _vm._v("Approved")
-                        ])
-                      : _c("span", { staticClass: "badge bg-danger" }, [
-                          _vm._v("Pending")
-                        ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-outline-info",
-                        attrs: { href: "#", title: "Edit" },
-                        on: {
-                          click: function($event) {
-                            return _vm.editModal(category)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-edit" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-outline-danger",
-                        attrs: { href: "#", title: "Delete" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteCategory(category.id)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-trash" })]
-                    )
-                  ])
-                ])
-              }),
-              0
+              "div",
+              {
+                staticClass: "input-group input-group-sm pt-1",
+                staticStyle: { width: "150px" }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-info",
+                    attrs: { type: "button" },
+                    on: { click: _vm.createModal }
+                  },
+                  [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Add New")]
+                )
+              ]
             )
-          ]),
-          _vm._v(" "),
-          _vm.pagination.last_page > 1
-            ? _c("pagination", {
-                attrs: { pagination: _vm.pagination, offset: 5 },
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c(
+              "form",
+              {
                 on: {
-                  paginate: function($event) {
-                    return _vm.getData()
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.filterData.apply(null, arguments)
                   }
                 }
-              })
-            : _vm._e()
-        ],
-        1
-      )
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-6 col-sm-12" }, [
+                    _c("div", { staticClass: "mb-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "form-label", attrs: { for: "name" } },
+                        [_vm._v("Name")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.filter.name,
+                            expression: "filter.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "name",
+                          placeholder: "Enter Name"
+                        },
+                        domProps: { value: _vm.filter.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.filter, "name", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6 col-sm-12" }, [
+                    _c("label", { staticClass: "form-label" }, [
+                      _vm._v("Status")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.filter.status,
+                            expression: "filter.status"
+                          }
+                        ],
+                        staticClass: "form-select",
+                        attrs: { "aria-label": "Default select example" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.filter,
+                              "status",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("-- Select --")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "1" } }, [
+                          _vm._v("Active")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "0" } }, [
+                          _vm._v("Inactive")
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                  [_vm._v("Submit")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("table", { staticClass: "table table-hover text-nowrap" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.categories, function(category, index) {
+                  return _c("tr", { key: category.id }, [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(category.name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      category.status
+                        ? _c("span", { staticClass: "badge bg-success" }, [
+                            _vm._v("Approved")
+                          ])
+                        : _c("span", { staticClass: "badge bg-danger" }, [
+                            _vm._v("Pending")
+                          ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-sm btn-outline-info",
+                          attrs: { href: "#", title: "Edit" },
+                          on: {
+                            click: function($event) {
+                              return _vm.editModal(category)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-edit" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-sm btn-outline-danger",
+                          attrs: { href: "#", title: "Delete" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteCategory(category.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-trash" })]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _vm.pagination.last_page > 1
+              ? _c("pagination", {
+                  attrs: { pagination: _vm.pagination, offset: 5 },
+                  on: {
+                    paginate: function($event) {
+                      return _vm.getData()
+                    }
+                  }
+                })
+              : _vm._e()
+          ],
+          1
+        )
+      ])
     ]),
     _vm._v(" "),
     _c(

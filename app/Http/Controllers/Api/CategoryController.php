@@ -20,9 +20,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new CategoryCollection($this->service->getPaginatedDate());
+        //dd($request->all());
+        return new CategoryCollection($this->service->getPaginatedDate($request));
         /*$categories = CategoryResource::collection($this->service->getPaginatedDate());
         if ($categories){
             return response()->json(['status' => true, 'data' => $categories, 'message' => 'Category List']);

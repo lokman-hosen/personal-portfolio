@@ -10,7 +10,30 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-header -->
+                <div class="card-body">
+                    <!--filter form start -->
+                    <form @submit.prevent="filterData">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" v-model="filter.name" id="name" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" aria-label="Default select example" v-model="filter.status">
+                                    <option value="">-- Select --</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <!--filter form end -->
+
+                    <!-- table start -->
                     <table class="table table-hover text-nowrap">
                         <thead>
                         <tr>
@@ -35,19 +58,23 @@
                         </tr>
                         </tbody>
                     </table>
-                <pagination
-                    v-if="pagination.last_page > 1"
-                    :pagination="pagination"
-                    :offset="5"
-                    @paginate="getData()"
-                ></pagination>
+                    <!-- table end -->
+
+                    <!-- pagination -->
+                    <pagination
+                        v-if="pagination.last_page > 1"
+                        :pagination="pagination"
+                        :offset="5"
+                        @paginate="getData()"
+                    ></pagination>
+                </div>
                 </div>
                 <!-- /.card-body -->
             </div>
 
         <!-- Button trigger modal -->
 
-        <!-- Modal -->
+        <!-- Create and edit Modal start-->
         <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -80,7 +107,7 @@
                 </div>
             </div>
         </div>
-            <!-- /.card -->
+        <!-- Create and edit modal end -->
         </div>
 </template>
 
@@ -98,17 +125,26 @@ export default {
                 name: '',
                 status: 1,
             }),
-
             categories: [],
-
             pagination: {
                 current_page: 1,
+            },
+            filter:{
+                name: '',
+                status: '',
             }
         }
     },
     methods: {
+        // get data
         getData(){
-            axios.get('api/category?page='+this.pagination.current_page)
+            const filterData = {
+                params:{
+                    name: this.filter.name,
+                    status: this.filter.status,
+                }
+            }
+            axios.get('api/category?page='+this.pagination.current_page, filterData)
             .then(response => {
                 this.categories = response.data.data;
                 this.pagination = response.data.meta;
@@ -119,11 +155,13 @@ export default {
             });
         },
 
+        //create modal
         createModal(){
             this.editMode = false,
             this.form.reset();
             $('#createModal').modal('show');
         },
+        //edit modal
         editModal(category){
             this.editMode = true,
                 //fill form with old data
@@ -131,6 +169,7 @@ export default {
             $('#createModal').modal('show');
         },
 
+        //  save record
         async saveCategory(){
             //const response = await this.form.post('api/category')
            this.form.post('api/category')
@@ -141,7 +180,6 @@ export default {
                        title: 'Category Created successfully'
                    })
                    // reset form value
-                  // $(':input').val('');
                    $('.modal').on('hidden.bs.modal', function(){
                        $(this).find('form')[0].reset();
                    });
@@ -156,8 +194,8 @@ export default {
             })
         },
 
+        // update record
         updateCategory(){
-            //console.log('update')
             this.form.put('api/category/'+this.form.id).then((response)=>{
                 if (response.data.status){
                     toast.fire({
@@ -184,6 +222,7 @@ export default {
             })
         },
 
+        // delete record
         deleteCategory(id){
             swal.fire({
                 title: 'Are you sure?',
@@ -213,16 +252,19 @@ export default {
                     })
                 }
             })
+        },
+        filterData(){
+            this.getData()
         }
     },
 
     /*created() {
         this.getData()
     },*/
+    // load data when mount component
     mounted() {
         this.getData()
     }
-
 }
 
 
