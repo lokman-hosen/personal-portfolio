@@ -105,7 +105,7 @@ class BaseService
 
 
     public function getPaginatedDate(){
-        return $this->model->latest()->get();
+        return $this->model->latest()->paginate(10);
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -20,7 +21,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->service->getPaginatedDate();
+        $categories = CategoryResource::collection($this->service->getPaginatedDate());
         if ($categories){
             return response()->json(['status' => true, 'data' => $categories, 'message' => 'Category List']);
         }

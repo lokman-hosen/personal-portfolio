@@ -29,7 +29,6 @@
         "force": "0.0.3",
         "sweetalert2": "^11.1.4",
         "vform": "^2.1.1",
-        "vue-router": "^3.5.2",
-        "vue-tables-2": "^2.3.1"
+        "vue-router": "^3.5.2"
     }
 }
