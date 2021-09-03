@@ -20,6 +20,12 @@ window.swal = Swal;
 import Pagination from "./components/Pagination";
 Vue.component('pagination', Pagination)
 
+Vue.filter('capitalize', function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',

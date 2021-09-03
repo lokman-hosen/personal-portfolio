@@ -1,5 +1,6 @@
 <template>
     <nav aria-label="...">
+        <p class="text-muted pl-2">Showing {{pagination.from}} to {{pagination.to}} of {{pagination.total}}</p>
         <ul class="pagination justify-content-center">
             <li class="page-item" :class="{ disabled: pagination.current_page <= 1 }">
                 <a class="page-link" @click.prevent="changePage(1)"  >First page</a>

@@ -2167,6 +2167,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['pagination', 'offset'],
   methods: {
@@ -2451,7 +2452,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2499,8 +2499,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                alert('Save'); //const response = await this.form.post('api/category')
-
+                //const response = await this.form.post('api/category')
                 _this2.form.post('api/category').then(function (response) {
                   if (response.data.status) {
                     toast.fire({
@@ -2521,7 +2520,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(error);
                 });
 
-              case 2:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -2798,6 +2797,11 @@ window.swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_2___default()); //import and
 
 
 vue__WEBPACK_IMPORTED_MODULE_4__.default.component('pagination', _components_Pagination__WEBPACK_IMPORTED_MODULE_3__.default);
+vue__WEBPACK_IMPORTED_MODULE_4__.default.filter('capitalize', function (value) {
+  if (!value) return '';
+  value = value.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+});
 var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().mixin({
   toast: true,
   position: 'top-end',
@@ -2968,7 +2972,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*@import 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css';*/\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-group-sm>.btn, .btn-sm {\n    padding: .15rem .5rem;\n    font-size: .875rem;\n    border-radius: .2rem;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -38878,14 +38882,24 @@ var render = function() {
       _c("Sidebar"),
       _vm._v(" "),
       _c("div", { staticClass: "content-wrapper" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "content-header" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("div", { staticClass: "row mb-2" }, [
+              _c("div", { staticClass: "col-sm-6" }, [
+                _c("h4", { staticClass: "m-0" }, [
+                  _vm._v(_vm._s(_vm._f("capitalize")(_vm.$route.name)))
+                ])
+              ])
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c("div", { staticClass: "container-fluid" }, [_c("router-view")], 1)
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1),
+      _vm._m(0),
       _vm._v(" "),
       _c("Footer")
     ],
@@ -38893,32 +38907,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "content-header" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row mb-2" }, [
-          _c("div", { staticClass: "col-sm-6" }, [
-            _c("h1", { staticClass: "m-0" }, [_vm._v("Starter Page")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-6" }, [
-            _c("ol", { staticClass: "breadcrumb float-sm-right" }, [
-              _c("li", { staticClass: "breadcrumb-item" }, [
-                _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "breadcrumb-item active" }, [
-                _vm._v("Starter Page")
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39402,6 +39390,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("nav", { attrs: { "aria-label": "..." } }, [
+    _c("p", { staticClass: "text-muted pl-2" }, [
+      _vm._v(
+        "Showing " +
+          _vm._s(_vm.pagination.from) +
+          " to " +
+          _vm._s(_vm.pagination.to) +
+          " of " +
+          _vm._s(_vm.pagination.total)
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "ul",
       { staticClass: "pagination justify-content-center" },
@@ -39816,22 +39815,20 @@ var render = function() {
         { staticClass: "card" },
         [
           _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [
-              _vm._v("Responsive Hover Table 55")
-            ]),
+            _c("h3", { staticClass: "card-title" }, [_vm._v("Category List")]),
             _vm._v(" "),
             _c("div", { staticClass: "card-tools" }, [
               _c(
                 "div",
                 {
-                  staticClass: "input-group input-group-sm",
+                  staticClass: "input-group input-group-sm pt-1",
                   staticStyle: { width: "150px" }
                 },
                 [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-info",
+                      staticClass: "btn btn-sm btn-info",
                       attrs: { type: "button" },
                       on: { click: _vm.createModal }
                     },
@@ -39867,6 +39864,7 @@ var render = function() {
                     _c(
                       "a",
                       {
+                        staticClass: "btn btn-sm btn-outline-info",
                         attrs: { href: "#", title: "Edit" },
                         on: {
                           click: function($event) {
@@ -39880,6 +39878,7 @@ var render = function() {
                     _c(
                       "a",
                       {
+                        staticClass: "btn btn-sm btn-outline-danger",
                         attrs: { href: "#", title: "Delete" },
                         on: {
                           click: function($event) {

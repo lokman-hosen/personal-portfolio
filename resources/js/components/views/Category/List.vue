@@ -3,11 +3,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Responsive Hover Table 55</h3>
-
+                    <h3 class="card-title">Category List</h3>
                     <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <button type="button" class="btn btn-info" @click="createModal"><i class="fa fa-plus"></i> Add New</button>
+                        <div class="input-group input-group-sm pt-1" style="width: 150px;">
+                            <button type="button" class="btn btn-sm btn-info" @click="createModal"><i class="fa fa-plus"></i> Add New</button>
                         </div>
                     </div>
                 </div>
@@ -30,8 +29,8 @@
                                 <span v-else class="badge bg-danger">Pending</span>
                             </td>
                             <td>
-                                <a href="#" title="Edit" @click="editModal(category)"><i class="fa fa-edit"></i> </a>
-                                <a href="#" title="Delete" @click="deleteCategory(category.id)"><i class="fa fa-trash"></i> </a>
+                                <a href="#" class="btn btn-sm btn-outline-info" title="Edit" @click="editModal(category)"><i class="fa fa-edit"></i> </a>
+                                <a href="#" class="btn btn-sm btn-outline-danger" title="Delete" @click="deleteCategory(category.id)"><i class="fa fa-trash"></i> </a>
                             </td>
                         </tr>
                         </tbody>
@@ -109,7 +108,7 @@ export default {
     },
     methods: {
         getData(){
-            axios.get('api/category?page=' + this.pagination.current_page)
+            axios.get('api/category?page='+this.pagination.current_page)
             .then(response => {
                 this.categories = response.data.data;
                 this.pagination = response.data.meta;
@@ -133,7 +132,6 @@ export default {
         },
 
         async saveCategory(){
-            alert('Save')
             //const response = await this.form.post('api/category')
            this.form.post('api/category')
             .then((response)=>{
@@ -231,7 +229,9 @@ export default {
 </script>
 
 <style>
-/*@import 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css';*/
-
-
+.btn-group-sm>.btn, .btn-sm {
+    padding: .15rem .5rem;
+    font-size: .875rem;
+    border-radius: .2rem;
+}
 </style>
