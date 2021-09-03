@@ -10,6 +10,10 @@ require('./bootstrap');
 import Vue  from "vue";
 import App from "./App";
 import router from "./router";
+import { ServerTable, ClientTable, Event } from 'vue-tables-2'
+Vue.use(ClientTable)
+Vue.use(ServerTable);
+Vue.use(Event);
 // ES6 Modules or TypeScript
 // import sweet alert and declare globally
 import Swal from 'sweetalert2'

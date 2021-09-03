@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <!-- /.card-header -->
-                    <table class="table table-hover text-nowrap">
+<!--                    <table class="table table-hover text-nowrap">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -35,7 +35,10 @@
                             </td>
                         </tr>
                         </tbody>
-                    </table>
+                    </table>-->
+
+                    <v-client-table :data="dataTableObj.tableData" :columns="dataTableObj.columns" :options="dataTableObj.options"/>
+
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -95,6 +98,47 @@ export default {
             }),
 
             categories: [],
+
+            dataTableObj: {
+                columns: ['id', 'name', 'age'],
+                tableData: [
+                    { id: 1, name: "John", age: "20" },
+                    { id: 2, name: "Jane", age: "24" },
+                    { id: 3, name: "Susan", age: "16" },
+                    { id: 4, name: "Chris", age: "55" },
+                    { id: 5, name: "Dan", age: "40" },
+                    { id: 6, name: "John", age: "20" },
+                    { id: 7, name: "Jane", age: "24" },
+                    { id: 8, name: "Susan", age: "16" },
+                    { id: 9, name: "Chris", age: "55" },
+                    { id: 10, name: "Dan", age: "40" },
+                    { id: 11, name: "Dan55", age: "40" },
+                    { id: 12, name: "John", age: "20" },
+                    { id: 13, name: "Jane", age: "24" },
+                    { id: 14, name: "Susan", age: "16" },
+                    { id: 15, name: "Chris", age: "55" },
+                    { id: 16, name: "Dan", age: "40" },
+                ],
+                options: {
+                    // see the options API
+                    headings: {
+                        id: 'ID',
+                        name: 'Name',
+                        age: 'Age',
+                       // group_name: 'User Group',
+                       // status: 'Status',
+                       // Action: 'Action',
+                    },
+                    sortable: ['name', 'age'],
+                    sortIcon: {
+                        base : 'fas',
+                        is: 'fa-sort',
+                        up: 'fa-sort-amount-down-alt',
+                        down: 'fa-sort-amount-up-alt'
+                    }
+                    //<i class="fas fa-sort-amount-up-alt"></i>
+                }
+            }
         }
     },
     methods: {
@@ -216,6 +260,8 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
+/*@import 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css';*/
+
 
 </style>
