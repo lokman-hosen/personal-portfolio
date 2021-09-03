@@ -66,5 +66,7 @@ export default {
 }
 </script>
 <style scoped>
-
+ .page-link:hover{
+     cursor: pointer;
+ }
 </style>

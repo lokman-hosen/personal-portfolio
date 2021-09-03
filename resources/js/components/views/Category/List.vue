@@ -36,14 +36,12 @@
                         </tr>
                         </tbody>
                     </table>
-<!--                <pagination
+                <pagination
                     v-if="pagination.last_page > 1"
                     :pagination="pagination"
                     :offset="5"
                     @paginate="getData()"
-                ></pagination>-->
-
-
+                ></pagination>
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -220,9 +218,12 @@ export default {
         }
     },
 
-    created() {
+    /*created() {
         this.getData()
-    },
+    },*/
+    mounted() {
+        this.getData()
+    }
 
 }
 
