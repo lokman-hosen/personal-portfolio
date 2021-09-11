@@ -104,18 +104,6 @@ class BaseService
     }
 
 
-    public function getPaginatedDate($request){
-        //dd($request->name);
-        $query = $this->model->query();
-        if (isset($request->name)){
-            $query = $query->where('name', 'like', '%'.$request->name.'%');
-        }
-        if (isset($request->status)){
-            $query = $query->where('status', $request->status);
-        }
-        return $query->latest()->paginate(10);
-    }
-
 
 
 }

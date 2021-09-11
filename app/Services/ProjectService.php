@@ -2,15 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\Category;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Project;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Class UserService
  * @package App\Services\Admin
  */
-class CategoryService extends BaseService
+class ProjectService extends BaseService
 {
 
     /**
@@ -22,13 +21,14 @@ class CategoryService extends BaseService
      */
 
 
-    public function __construct(Category $category)
+    public function __construct(Project $project)
     {
-        $this->model = $category;
+        $this->model = $project;
     }
 
-    public function getPaginatedDate($request){
-        $query = $this->model->query();
+    public function getPaginatedDate($request): LengthAwarePaginator
+    {
+        $query = $this->model->with('category');
         if (isset($request->name)){
             $query = $query->where('name', 'like', '%'.$request->name.'%');
         }

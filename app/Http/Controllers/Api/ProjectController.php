@@ -1,20 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ProjectCollection;
 use App\Models\Project;
+use App\Services\ProjectService;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    protected $service;
+    public function __construct(ProjectService $projectService){
+        $this->service = $projectService;
+    }
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return ProjectCollection
      */
-    public function index()
+    public function index(Request $request): ProjectCollection
     {
-        //
+        return new ProjectCollection($this->service->getPaginatedDate($request));
     }
 
     /**

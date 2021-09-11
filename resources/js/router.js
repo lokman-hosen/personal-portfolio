@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Dashboard from "./components/views/Dashboard";
 import User from "./components/views/User";
 import CategoryList from "./components/views/Category/List"
+import ProjectList from "./components/views/Projects/List"
 
 
 Vue.use(Router)
@@ -22,6 +23,11 @@ const routes = [
         path: '/category',
         name: 'category',
         component: CategoryList
+    },
+    {
+        path: '/project',
+        name: 'project',
+        component: ProjectList
     },
 ]
 
