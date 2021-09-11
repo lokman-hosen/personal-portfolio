@@ -43,6 +43,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Category</th>
+                                <th>Company</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -51,6 +53,8 @@
                             <tr v-for="(project, index) in projects" :key="project.id">
                                 <td>{{pagination.from+index}}</td>
                                 <td>{{project.name}}</td>
+                                <td>{{project.category.name}}</td>
+                                <td>{{project.company}}</td>
                                 <td>
                                     <span v-if="project.status" class="badge bg-success">Approved</span>
                                     <span v-else class="badge bg-danger">Pending</span>
@@ -58,6 +62,7 @@
                                 <td>
                                     <a href="#" class="btn btn-sm btn-outline-info" title="Edit"><i class="fa fa-edit"></i> </a>
                                     <a href="#" class="btn btn-sm btn-outline-danger" title="Delete" ><i class="fa fa-trash"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-success" title="View" ><i class="fa fa-eye"></i> </a>
                                 </td>
                             </tr>
                             </tbody>

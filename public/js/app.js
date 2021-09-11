@@ -2834,6 +2834,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "List",
@@ -40693,6 +40698,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(project.name))]),
                       _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(project.category.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(project.company))]),
+                      _vm._v(" "),
                       _c("td", [
                         project.status
                           ? _c("span", { staticClass: "badge bg-success" }, [
@@ -40757,6 +40766,10 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Category")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Company")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
@@ -40784,6 +40797,15 @@ var staticRenderFns = [
           attrs: { href: "#", title: "Delete" }
         },
         [_c("i", { staticClass: "fa fa-trash" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-sm btn-outline-success",
+          attrs: { href: "#", title: "View" }
+        },
+        [_c("i", { staticClass: "fa fa-eye" })]
       )
     ])
   }

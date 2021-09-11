@@ -28,7 +28,7 @@ class ProjectService extends BaseService
 
     public function getPaginatedDate($request): LengthAwarePaginator
     {
-        $query = $this->model->with('category');
+        $query = $this->model->with('category:id,name');
         if (isset($request->name)){
             $query = $query->where('name', 'like', '%'.$request->name.'%');
         }
