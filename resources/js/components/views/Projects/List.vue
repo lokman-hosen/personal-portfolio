@@ -6,7 +6,7 @@
                     <h3 class="card-title">Project List</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm pt-1 mr-2">
-                            <button type="button" class="btn btn-sm btn-info" ><i class="fa fa-plus"></i> Add New</button>
+                            <button type="button" class="btn btn-sm btn-info" @click="createModal"><i class="fa fa-plus"></i> Add New</button>
                         </div>
                     </div>
                 </div>
@@ -86,19 +86,86 @@
         <!-- Button trigger modal -->
 
         <!-- Create and edit Modal start-->
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" v-show="!editMode">Create Category</h5>
+                        <h5 class="modal-title" v-show="editMode">Edit Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form @submit.prevent="editMode ? updateProject() : saveProject()">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="projectName" class="form-label">Name</label>
+                                <input type="text" id="projectName" class="form-control" name="name" v-model="form.name" placeholder="Enter Project Name">
+                                <div class="text-danger" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Category</label>
+                                <select class="form-select" name="category_id" v-model="form.category_id" aria-label="Default select example">
+                                    <option value="">--Select--</option>
+                                    <option v-for="category in categories" :key="category.id" :value="category.id" >{{category.name}}</option>
+                                </select>
+                                <div class="text-danger" v-if="form.errors.has('category_id')" v-html="form.errors.get('category_id')" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Features</label>
+                                <textarea type="text"  class="form-control" name="features" v-model="form.features" placeholder="Enter Project Features"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Technologies</label>
+                                <textarea type="text"  class="form-control" name="technologies" v-model="form.technologies" placeholder="Enter Project Technologies"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="company" class="form-label">Company</label>
+                                <input type="text" id="company" class="form-control" name="company" v-model="form.company" placeholder="Enter Company Name">
+                            </div>
+
+                            <div v-if="editMode" class="mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" name="status" v-model="form.status" aria-label="Default select example">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                                <div class="text-danger" v-if="form.errors.has('status')" v-html="form.errors.get('status')" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" :disabled="form.busy">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <!-- Create and edit modal end -->
     </div>
 </template>
 
 <script>
 import axios from "axios";
+import Form from "vform";
 
 export default {
     name: "List",
 
     data(){
         return{
+            editMode: true,
+            form: new Form({
+                id: '',
+                name: '',
+                features: '',
+                category_id: '',
+                technologies: '',
+                status: 1,
+            }),
             projects: [],
+            categories: [],
             pagination: {
                 current_page: 1,
             },
@@ -127,6 +194,126 @@ export default {
                     console.log(error);
                 });
         },
+
+        //create modal
+        createModal(){
+            this.getCategoryList(),
+            this.editMode = false,
+                this.form.reset();
+            $('#createModal').modal('show');
+        },
+
+        //edit modal
+        editModal(category){
+            this.editMode = true,
+                //fill form with old data
+                this.form.fill(category);
+            $('#createModal').modal('show');
+        },
+
+        //  save record
+        async saveProject(){
+            //const response = await this.form.post('api/category')
+            this.form.post('api/project')
+                .then((response)=>{
+                    if (response.data.status){
+                        toast.fire({
+                            icon: 'success',
+                            title: 'Project Created successfully'
+                        })
+                        // reset form value
+                        $('.modal').on('hidden.bs.modal', function(){
+                            $(this).find('form')[0].reset();
+                        });
+                        // hide the modal
+                        $('#createModal').modal('hide');
+                        //load new data
+                        this.getData()
+                    }
+                })
+                .catch((error)=>{
+                    console.log(error)
+                })
+        },
+
+        // update record
+        updateProject(){
+            this.form.put('api/project/'+this.form.id).then((response)=>{
+                if (response.data.status){
+                    toast.fire({
+                        icon: 'success',
+                        title: 'Project Updated successfully'
+                    })
+                    // reset form value
+                    // $(':input').val('');
+                    $('.modal').on('hidden.bs.modal', function(){
+                        $(this).find('form')[0].reset();
+                    });
+                    // hide the modal
+                    $('#createModal').modal('hide');
+                    //load new data
+                    this.getData()
+                }
+            })
+                .catch((error)=>{
+                    console.log(error)
+                    /*toast.fire({
+                        icon: 'error',
+                        title: 'Error To Updated Category'
+                    })*/
+                })
+        },
+
+        // delete record
+        deleteCategory(id){
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //delete item
+                    this.form.delete('api/project/'+id).then(()=>{
+                        swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        this.getData();
+                    })
+                        .catch(()=>{
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                            })
+                        })
+                }
+            })
+        },
+
+        getCategoryList(){
+            axios.get('api/category')
+                .then(response => {
+                    this.categories = response.data.data;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+        },
+        filterData(){
+            this.getData()
+        },
+        reloadData(){
+            this.filter.name = '';
+            this.filter.status = '';
+            this.getData();
+        }
 
     },
     // load data when mount component

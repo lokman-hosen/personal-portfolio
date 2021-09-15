@@ -22,7 +22,12 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        //dd($request->all());
+        if (empty($request->all())){
+            $categories = CategoryResource::collection($this->service->getCategoryList());
+            if ($categories){
+                return response()->json(['status' => true, 'data' => $categories, 'message' => 'Category List']);
+            }
+        }
         return new CategoryCollection($this->service->getPaginatedDate($request));
         /*$categories = CategoryResource::collection($this->service->getPaginatedDate());
         if ($categories){
@@ -94,4 +99,5 @@ class CategoryController extends Controller
         return response()->json(['status' => true, 'message' => 'Category Deleted Successfully']);
 
     }
+
 }

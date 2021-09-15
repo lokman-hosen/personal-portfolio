@@ -38,4 +38,8 @@ class CategoryService extends BaseService
         return $query->latest()->paginate(10);
     }
 
+    public function getCategoryList(){
+        return $this->model->orderByName()->get();
+    }
+
 }

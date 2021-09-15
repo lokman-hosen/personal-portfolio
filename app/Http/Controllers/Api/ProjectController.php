@@ -7,6 +7,7 @@ use App\Http\Resources\ProjectCollection;
 use App\Models\Project;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -42,7 +43,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $this->validate($request, [
+            'name' => 'required',
+            'category_id' => 'required',
+        ]);
+        dd(Auth::id());
+        dd($request->merge(['user_id' => Auth::id()]));
+
+        $project = $this->service->create($request->merge(['user_id' => Auth::id()]));
+        if ($project){
+            return response()->json(['status' => true, 'data' => $project, 'message' => 'Project Created']);
+        }
     }
 
     /**

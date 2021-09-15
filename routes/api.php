@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProjectController;
-use App\Http\Resources\ProjectCollection;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +21,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('category', CategoryController::class);
 Route::apiResource('project', ProjectController::class);
+
