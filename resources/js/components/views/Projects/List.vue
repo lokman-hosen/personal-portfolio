@@ -60,9 +60,9 @@
                                     <span v-else class="badge bg-danger">Pending</span>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-outline-info" title="Edit"><i class="fa fa-edit"></i> </a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger" title="Delete" ><i class="fa fa-trash"></i> </a>
-                                    <a href="#" class="btn btn-sm btn-outline-success" title="View" ><i class="fa fa-eye"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-info" title="Edit" @click="editModal(project)"><i class="fa fa-edit"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-danger" title="Delete"  @click="deleteCategory(project.id)"><i class="fa fa-trash"></i> </a>
+<!--                                    <a href="#" class="btn btn-sm btn-outline-success" title="View" ><i class="fa fa-eye"></i> </a>-->
                                 </td>
                             </tr>
                             </tbody>
@@ -164,6 +164,7 @@ export default {
                 features: '',
                 category_id: '',
                 technologies: '',
+                company: '',
                 //get login user id taken in app.js file
                 user_id: this.$userId,
                 status: 1,
@@ -208,10 +209,11 @@ export default {
         },
 
         //edit modal
-        editModal(category){
+        editModal(project){
+            this.getCategoryList(),
             this.editMode = true,
                 //fill form with old data
-                this.form.fill(category);
+                this.form.fill(project);
             $('#createModal').modal('show');
         },
 

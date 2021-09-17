@@ -94,8 +94,10 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $project = $this->service->find($id);
+        $project->delete();
+        return response()->json(['status' => true, 'message' => 'Category Deleted Successfully']);
     }
 }
