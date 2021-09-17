@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -83,9 +84,19 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'status' => 'required',
+            'name' => [
+                'required',
+                Rule::unique('categories')->ignore($id),
+            ],
+        ]);
+        $category = $this->service->update($request->all(), $id);
+        if ($category){
+            return response()->json(['status' => true,  'message' => 'Category Updated Successfully']);
+        }
     }
 
     /**
