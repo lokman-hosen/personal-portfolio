@@ -43,15 +43,12 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $this->validate($request, [
             'name' => 'required',
             'category_id' => 'required',
         ]);
-        dd(Auth::id());
-        dd($request->merge(['user_id' => Auth::id()]));
 
-        $project = $this->service->create($request->merge(['user_id' => Auth::id()]));
+        $project = $this->service->create($request->all());
         if ($project){
             return response()->json(['status' => true, 'data' => $project, 'message' => 'Project Created']);
         }

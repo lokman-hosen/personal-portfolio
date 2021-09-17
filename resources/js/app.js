@@ -10,6 +10,10 @@ require('./bootstrap');
 import Vue  from "vue";
 import App from "./App";
 import router from "./router";
+// get login user id set in metaTag of master blade file
+Vue.prototype.$userId =$("meta[name='user-id']").attr('content');
+
+
 
 
 // ES6 Modules or TypeScript

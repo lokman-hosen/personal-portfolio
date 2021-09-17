@@ -95,6 +95,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form @submit.prevent="editMode ? updateProject() : saveProject()">
+                        <input type="hidden" name="user_id" v-model="user_id">
+
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="projectName" class="form-label">Name</label>
@@ -162,6 +164,8 @@ export default {
                 features: '',
                 category_id: '',
                 technologies: '',
+                //get login user id taken in app.js file
+                user_id: this.$userId,
                 status: 1,
             }),
             projects: [],

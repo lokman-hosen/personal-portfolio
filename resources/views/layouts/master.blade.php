@@ -8,8 +8,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- CSRF Token -->
+    <!-- CSRF Token 44-->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!--Set auth user id -->
+    @if (Auth::check())
+    <meta name="user-id" content="{{ Auth::user()->id }}">
+    @endif
+
     <title>Portfolio|Laravel|Vue</title>
 
     <!-- Google Font: Source Sans Pro -->
