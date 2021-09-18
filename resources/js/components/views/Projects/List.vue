@@ -61,8 +61,8 @@
                                 </td>
                                 <td>
                                     <a href="#" class="btn btn-sm btn-outline-info" title="Edit" @click="editModal(project)"><i class="fa fa-edit"></i> </a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger" title="Delete"  @click="deleteCategory(project.id)"><i class="fa fa-trash"></i> </a>
-<!--                                    <a href="#" class="btn btn-sm btn-outline-success" title="View" ><i class="fa fa-eye"></i> </a>-->
+                                    <a href="#" class="btn btn-sm btn-outline-danger" title="Delete"  @click="deleteProject(project.id)"><i class="fa fa-trash"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-success" title="View" @click="detailProject(project)"><i class="fa fa-eye"></i> </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -91,10 +91,11 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" v-show="!editMode">Create Category</h5>
-                        <h5 class="modal-title" v-show="editMode">Edit Category</h5>
+                        <h5 class="modal-title" v-show="editMode && !detailMode">Edit Category</h5>
+                        <h5 class="modal-title" v-show="detailMode">View Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form @submit.prevent="editMode ? updateProject() : saveProject()">
+                    <form v-if="!detailMode" @submit.prevent="editMode ? updateProject() : saveProject()">
                         <input type="hidden" name="user_id" v-model="user_id">
 
                         <div class="modal-body">
@@ -141,6 +142,18 @@
                             <button type="submit" class="btn btn-primary" :disabled="form.busy">Save</button>
                         </div>
                     </form>
+
+                    <div v-if="detailMode" class="modal-body">
+                        <div class="card">
+                            <form>
+                                <ul class="list-group list-group-flush">
+                                    <input type="text"  class="form-control" name="name" v-model="form.name" placeholder="Enter Project Name">
+                                    <li class="list-group-item">A second item</li>
+                                    <li class="list-group-item">A third item</li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -158,6 +171,7 @@ export default {
     data(){
         return{
             editMode: true,
+            detailMode: false,
             form: new Form({
                 id: '',
                 name: '',
@@ -202,18 +216,26 @@ export default {
 
         //create modal
         createModal(){
-            this.getCategoryList(),
-            this.editMode = false,
+            this.getCategoryList();
+            this.editMode = false;
                 this.form.reset();
             $('#createModal').modal('show');
         },
 
         //edit modal
         editModal(project){
-            this.getCategoryList(),
-            this.editMode = true,
+            this.getCategoryList();
+            this.detailMode = false;
+            this.editMode = true;
                 //fill form with old data
                 this.form.fill(project);
+            $('#createModal').modal('show');
+        },
+
+        // project detail
+        detailProject(project){
+            console.log(JSON.stringify(project))
+            this.detailMode = true;
             $('#createModal').modal('show');
         },
 
@@ -271,7 +293,7 @@ export default {
         },
 
         // delete record
-        deleteCategory(id){
+        deleteProject(id){
             swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
