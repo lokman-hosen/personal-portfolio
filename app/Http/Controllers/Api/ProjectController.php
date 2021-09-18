@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProjectRequest;
 use App\Http\Resources\ProjectCollection;
 use App\Models\Project;
 use App\Services\ProjectService;
@@ -42,13 +43,8 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'category_id' => 'required',
-        ]);
-
         $project = $this->service->create($request->all());
         if ($project){
             return response()->json(['status' => true, 'data' => $project, 'message' => 'Project Created']);
@@ -84,17 +80,10 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProjectRequest $request, $id)
     {
-        $this->validate($request, [
-            'status' => 'required',
-            'name' => [
-                'required',
-                Rule::unique('categories')->ignore($id),
-            ],
-        ]);
-        $category = $this->service->update($request->all(), $id);
-        if ($category){
+        $project = $this->service->update($request->all(), $id);
+        if ($project){
             return response()->json(['status' => true,  'message' => 'Category Updated Successfully']);
         }
     }

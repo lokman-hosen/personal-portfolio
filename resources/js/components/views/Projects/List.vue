@@ -90,7 +90,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" v-show="!editMode">Create Category</h5>
+                        <h5 class="modal-title" v-show="!editMode && !detailMode">Create Category</h5>
                         <h5 class="modal-title" v-show="editMode && !detailMode">Edit Category</h5>
                         <h5 class="modal-title" v-show="detailMode">View Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -99,43 +99,48 @@
                         <input type="hidden" name="user_id" v-model="user_id">
 
                         <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="projectName" class="form-label">Name</label>
-                                <input type="text" id="projectName" class="form-control" name="name" v-model="form.name" placeholder="Enter Project Name">
-                                <div class="text-danger" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Category</label>
-                                <select class="form-select" name="category_id" v-model="form.category_id" aria-label="Default select example">
-                                    <option value="">--Select--</option>
-                                    <option v-for="category in categories" :key="category.id" :value="category.id" >{{category.name}}</option>
-                                </select>
-                                <div class="text-danger" v-if="form.errors.has('category_id')" v-html="form.errors.get('category_id')" />
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="projectName" class="form-label">Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="projectName" class="form-control" name="name" v-model="form.name" placeholder="Enter Project Name">
+                                    <div class="text-danger" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label">Category <span class="text-danger">*</span></label>
+                                    <select class="form-select" name="category_id" v-model="form.category_id" aria-label="Default select example">
+                                        <option value="">--Select--</option>
+                                        <option v-for="category in categories" :key="category.id" :value="category.id" >{{category.name}}</option>
+                                    </select>
+                                    <div class="text-danger" v-if="form.errors.has('category_id')" v-html="form.errors.get('category_id')" />
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Features</label>
+                                    <input type="text"  class="form-control" name="features" v-model="form.features" placeholder="Enter Project Features">
+                                    <div class="form-text">User comma(,) separator for multiple feature</div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Technologies</label>
+                                    <input type="text" class="form-control" name="technologies" v-model="form.technologies" placeholder="Enter Project Technologies">
+                                    <div class="form-text">User comma(,) separator for multiple technology</div>
+                                </div>
+
+                                <div class="col-6">
+                                    <label for="company" class="form-label">Company</label>
+                                    <input type="text" id="company" class="form-control" name="company" v-model="form.company" placeholder="Enter Company Name">
+                                </div>
+
+                                <div v-if="editMode" class="col-6">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select" name="status" v-model="form.status" aria-label="Default select example">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                    <div class="text-danger" v-if="form.errors.has('status')" v-html="form.errors.get('status')" />
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Features</label>
-                                <textarea type="text"  class="form-control" name="features" v-model="form.features" placeholder="Enter Project Features"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Technologies</label>
-                                <textarea type="text"  class="form-control" name="technologies" v-model="form.technologies" placeholder="Enter Project Technologies"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="company" class="form-label">Company</label>
-                                <input type="text" id="company" class="form-control" name="company" v-model="form.company" placeholder="Enter Company Name">
-                            </div>
-
-                            <div v-if="editMode" class="mb-3">
-                                <label class="form-label">Status</label>
-                                <select class="form-select" name="status" v-model="form.status" aria-label="Default select example">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
-                                <div class="text-danger" v-if="form.errors.has('status')" v-html="form.errors.get('status')" />
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -145,13 +150,14 @@
 
                     <div v-if="detailMode" class="modal-body">
                         <div class="card">
-                            <form>
-                                <ul class="list-group list-group-flush">
-                                    <input type="text"  class="form-control" name="name" v-model="form.name" placeholder="Enter Project Name">
-                                    <li class="list-group-item">A second item</li>
-                                    <li class="list-group-item">A third item</li>
-                                </ul>
-                            </form>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Name: {{project.name}}</li>
+                                <li class="list-group-item">Category: {{project.category.name}}</li>
+                                <li class="list-group-item">Features: {{project.features}}</li>
+                                <li class="list-group-item">Technologies: {{project.technologies}}</li>
+                                <li class="list-group-item">Company: {{project.company}}</li>
+                                <li class="list-group-item">Status: {{project.status == 1 ? 'Approved' : 'Pending'}}</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -191,7 +197,9 @@ export default {
             filter:{
                 name: '',
                 status: '',
-            }
+            },
+            //detail
+            project: {}
         }
     },
     methods:{
@@ -218,23 +226,27 @@ export default {
         createModal(){
             this.getCategoryList();
             this.editMode = false;
-                this.form.reset();
+            this.detailMode = false;
+            this.form.reset();
             $('#createModal').modal('show');
         },
 
         //edit modal
         editModal(project){
+            this.form.reset();
+            this.form.clear();
             this.getCategoryList();
             this.detailMode = false;
             this.editMode = true;
-                //fill form with old data
-                this.form.fill(project);
+            //fill form with old data
+            this.form.fill(project);
             $('#createModal').modal('show');
         },
 
         // project detail
         detailProject(project){
             console.log(JSON.stringify(project))
+            this.project = project;
             this.detailMode = true;
             $('#createModal').modal('show');
         },
