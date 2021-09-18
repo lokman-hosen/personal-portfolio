@@ -2904,6 +2904,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2917,6 +2919,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         features: '',
         category_id: '',
         technologies: '',
+        company: '',
+        //get login user id taken in app.js file
+        user_id: this.$userId,
         status: 1
       }),
       projects: [],
@@ -2955,9 +2960,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       $('#createModal').modal('show');
     },
     //edit modal
-    editModal: function editModal(category) {
-      this.editMode = true, //fill form with old data
-      this.form.fill(category);
+    editModal: function editModal(project) {
+      this.getCategoryList(), this.editMode = true, //fill form with old data
+      this.form.fill(project);
       $('#createModal').modal('show');
     },
     //  save record
@@ -3176,12 +3181,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App */ "./resources/js/App.vue");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Pagination */ "./resources/js/components/Pagination.vue");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Pagination */ "./resources/js/components/Pagination.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -3192,28 +3197,30 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //window.
 
 
 
- // ES6 Modules or TypeScript
+ // get login user id set in metaTag of master blade file
+
+vue__WEBPACK_IMPORTED_MODULE_2__.default.prototype.$userId = $("meta[name='user-id']").attr('content'); // ES6 Modules or TypeScript
 // import sweet alert and declare globally
 
 
-window.swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_2___default()); //import and register globally
+window.swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_3___default()); //import and register globally
 
 
-vue__WEBPACK_IMPORTED_MODULE_4__.default.component('pagination', _components_Pagination__WEBPACK_IMPORTED_MODULE_3__.default);
-vue__WEBPACK_IMPORTED_MODULE_4__.default.filter('capitalize', function (value) {
+vue__WEBPACK_IMPORTED_MODULE_2__.default.component('pagination', _components_Pagination__WEBPACK_IMPORTED_MODULE_4__.default);
+vue__WEBPACK_IMPORTED_MODULE_2__.default.filter('capitalize', function (value) {
   if (!value) return '';
   value = value.toString();
   return value.charAt(0).toUpperCase() + value.slice(1);
 });
-var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().mixin({
+var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
   didOpen: function didOpen(toast) {
-    toast.addEventListener('mouseenter', (sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().stopTimer));
-    toast.addEventListener('mouseleave', (sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().resumeTimer));
+    toast.addEventListener('mouseenter', (sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().stopTimer));
+    toast.addEventListener('mouseleave', (sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().resumeTimer));
   }
 });
 window.toast = Toast;
@@ -3234,7 +3241,7 @@ window.toast = Toast;
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
+var app = new vue__WEBPACK_IMPORTED_MODULE_2__.default({
   el: '#app',
   router: _router__WEBPACK_IMPORTED_MODULE_1__.default,
   render: function render(h) {
@@ -40930,7 +40937,35 @@ var render = function() {
                             ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(1, true)
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-sm btn-outline-info",
+                            attrs: { href: "#", title: "Edit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.editModal(project)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-sm btn-outline-danger",
+                            attrs: { href: "#", title: "Delete" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteCategory(project.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash" })]
+                        )
+                      ])
                     ])
                   }),
                   0
@@ -41022,6 +41057,27 @@ var render = function() {
                 }
               },
               [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user_id,
+                      expression: "user_id"
+                    }
+                  ],
+                  attrs: { type: "hidden", name: "user_id" },
+                  domProps: { value: _vm.user_id },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.user_id = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("div", { staticClass: "mb-3" }, [
                     _c(
@@ -41356,39 +41412,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-sm btn-outline-info",
-          attrs: { href: "#", title: "Edit" }
-        },
-        [_c("i", { staticClass: "fa fa-edit" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-sm btn-outline-danger",
-          attrs: { href: "#", title: "Delete" }
-        },
-        [_c("i", { staticClass: "fa fa-trash" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-sm btn-outline-success",
-          attrs: { href: "#", title: "View" }
-        },
-        [_c("i", { staticClass: "fa fa-eye" })]
-      )
     ])
   }
 ]
