@@ -72,6 +72,7 @@
                                     <a href="#" class="btn btn-sm btn-outline-success" title="View" @click="detailProject(project)"><i class="fa fa-eye"></i> </a>
                                 </td>
                             </tr>
+                            <tr v-if="projects.length == 0"><td colspan="6"><p class="mb-0 text-center">No Data Found</p></td></tr>
                             </tbody>
                         </table>
                         <!-- table end -->

@@ -2933,6 +2933,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -41143,72 +41144,76 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.projects, function(project, index) {
-                    return _c("tr", { key: project.id }, [
-                      _c("td", [_vm._v(_vm._s(_vm.pagination.from + index))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(project.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(project.category.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(project.company))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        project.status
-                          ? _c("span", { staticClass: "badge bg-success" }, [
-                              _vm._v("Approved")
-                            ])
-                          : _c("span", { staticClass: "badge bg-danger" }, [
-                              _vm._v("Pending")
-                            ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-sm btn-outline-info",
-                            attrs: { href: "#", title: "Edit" },
-                            on: {
-                              click: function($event) {
-                                return _vm.editModal(project)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit" })]
-                        ),
+                  [
+                    _vm._l(_vm.projects, function(project, index) {
+                      return _c("tr", { key: project.id }, [
+                        _c("td", [_vm._v(_vm._s(_vm.pagination.from + index))]),
                         _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-sm btn-outline-danger",
-                            attrs: { href: "#", title: "Delete" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteProject(project.id)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-trash" })]
-                        ),
+                        _c("td", [_vm._v(_vm._s(project.name))]),
                         _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-sm btn-outline-success",
-                            attrs: { href: "#", title: "View" },
-                            on: {
-                              click: function($event) {
-                                return _vm.detailProject(project)
+                        _c("td", [_vm._v(_vm._s(project.category.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(project.company))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          project.status
+                            ? _c("span", { staticClass: "badge bg-success" }, [
+                                _vm._v("Approved")
+                              ])
+                            : _c("span", { staticClass: "badge bg-danger" }, [
+                                _vm._v("Pending")
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-outline-info",
+                              attrs: { href: "#", title: "Edit" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.editModal(project)
+                                }
                               }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-eye" })]
-                        )
+                            },
+                            [_c("i", { staticClass: "fa fa-edit" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-outline-danger",
+                              attrs: { href: "#", title: "Delete" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteProject(project.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-trash" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-outline-success",
+                              attrs: { href: "#", title: "View" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.detailProject(project)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-eye" })]
+                          )
+                        ])
                       ])
-                    ])
-                  }),
-                  0
+                    }),
+                    _vm._v(" "),
+                    _vm.projects.length == 0 ? _c("tr", [_vm._m(2)]) : _vm._e()
+                  ],
+                  2
                 )
               ]),
               _vm._v(" "),
@@ -41338,7 +41343,7 @@ var render = function() {
                     _c("div", { staticClass: "modal-body" }, [
                       _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col-6" }, [
-                          _vm._m(2),
+                          _vm._m(3),
                           _vm._v(" "),
                           _c("input", {
                             directives: [
@@ -41378,7 +41383,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-6" }, [
-                          _vm._m(3),
+                          _vm._m(4),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -41741,6 +41746,14 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "6" } }, [
+      _c("p", { staticClass: "mb-0 text-center" }, [_vm._v("No Data Found")])
     ])
   },
   function() {

@@ -33,7 +33,7 @@ class ProjectService extends BaseService
             $query = $query->where('name', 'like', '%'.$request->name.'%');
         }
         if (isset($request->category_id)){
-            $query = $query->where('category_id', 'like', '%'.$request->category_id.'%');
+            $query = $query->where('category_id', $request->category_id);
         }
         if (isset($request->status)){
             $query = $query->where('status', $request->status);
