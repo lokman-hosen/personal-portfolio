@@ -2528,7 +2528,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //create modal
     createModal: function createModal() {
-      this.editMode = false, this.form.reset();
+      this.editMode = false;
+      this.form.reset();
       $('#createModal').modal('show');
     },
     //edit modal
@@ -2925,6 +2926,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2951,6 +2959,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       filter: {
         name: '',
+        category_id: '',
         status: ''
       },
       //detail
@@ -2965,6 +2974,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var filterData = {
         params: {
           name: this.filter.name,
+          category_id: this.filter.category_id,
           status: this.filter.status
         }
       };
@@ -3111,12 +3121,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     reloadData: function reloadData() {
       this.filter.name = '';
+      this.filter.category_id = '';
       this.filter.status = '';
       this.getData();
     }
   },
   // load data when mount component
   mounted: function mounted() {
+    this.getCategoryList();
     this.getData();
   }
 });
@@ -40946,11 +40958,188 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.filterData.apply(null, arguments)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-6 col-sm-12" }, [
+                  _c("div", { staticClass: "mb-3" }, [
+                    _c(
+                      "label",
+                      { staticClass: "form-label", attrs: { for: "name" } },
+                      [_vm._v("Name")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.filter.name,
+                          expression: "filter.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "name",
+                        placeholder: "Enter Name"
+                      },
+                      domProps: { value: _vm.filter.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.filter, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 col-sm-12" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Category")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.filter.category_id,
+                          expression: "filter.category_id"
+                        }
+                      ],
+                      staticClass: "form-select",
+                      attrs: { "aria-label": "Default select example" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.filter,
+                            "category_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [
+                        _vm._v("--Select--")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.categories, function(category) {
+                        return _c(
+                          "option",
+                          {
+                            key: category.id,
+                            domProps: { value: category.id }
+                          },
+                          [_vm._v(_vm._s(category.name))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 col-sm-12" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Status")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.filter.status,
+                          expression: "filter.status"
+                        }
+                      ],
+                      staticClass: "form-select",
+                      attrs: { "aria-label": "Default select example" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.filter,
+                            "status",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [
+                        _vm._v("-- Select --")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "1" } }, [
+                        _vm._v("Active")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "0" } }, [
+                        _vm._v("Inactive")
+                      ])
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "text-right" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-info p-1 ml-2",
+                    attrs: { type: "button" },
+                    on: { click: _vm.reloadData }
+                  },
+                  [_c("i", { staticClass: "fas fa-sync" }), _vm._v(" Refresh")]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
             "div",
             { staticClass: "table-responsive" },
             [
               _c("table", { staticClass: "table table-hover mt-2" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -41149,7 +41338,7 @@ var render = function() {
                     _c("div", { staticClass: "modal-body" }, [
                       _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col-6" }, [
-                          _vm._m(1),
+                          _vm._m(2),
                           _vm._v(" "),
                           _c("input", {
                             directives: [
@@ -41189,7 +41378,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-6" }, [
-                          _vm._m(2),
+                          _vm._m(3),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -41524,6 +41713,16 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-sm btn-primary p-1", attrs: { type: "submit" } },
+      [_c("i", { staticClass: "fas fa-search" }), _vm._v(" Search")]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

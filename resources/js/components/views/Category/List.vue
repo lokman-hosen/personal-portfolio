@@ -163,14 +163,14 @@ export default {
 
         //create modal
         createModal(){
-            this.editMode = false,
+            this.editMode = false;
             this.form.reset();
             $('#createModal').modal('show');
         },
         //edit modal
         editModal(category){
             this.editMode = true,
-                //fill form with old data
+            //fill form with old data
             this.form.fill(category);
             $('#createModal').modal('show');
         },

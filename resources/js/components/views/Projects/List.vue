@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <!--filter form start -->
-<!--                    <form @submit.prevent="filterData">
+                    <form @submit.prevent="filterData">
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <div class="mb-3">
@@ -21,9 +21,16 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
+                                <label class="form-label">Category</label>
+                                <select class="form-select" v-model="filter.category_id" aria-label="Default select example">
+                                    <option value="">--Select--</option>
+                                    <option v-for="category in categories" :key="category.id" :value="category.id" >{{category.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
                                 <label class="form-label">Status</label>
                                 <select class="form-select" aria-label="Default select example" v-model="filter.status">
-                                    <option value="">&#45;&#45; Select &#45;&#45;</option>
+                                    <option value="">-- Select --</option>
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
@@ -33,8 +40,8 @@
                             <button type="submit" class="btn btn-sm btn-primary p-1"><i class="fas fa-search"></i> Search</button>
                             <button type="button" class="btn btn-sm btn-info p-1 ml-2" @click="reloadData"><i class="fas fa-sync"></i> Refresh</button>
                         </div>
-                    </form>-->
-                    <!--filter form end -->
+                    </form>
+                    <!-- filter form end -->
 
                     <div class="table-responsive">
                         <!-- table start -->
@@ -196,6 +203,7 @@ export default {
             },
             filter:{
                 name: '',
+                category_id: '',
                 status: '',
             },
             //detail
@@ -208,6 +216,7 @@ export default {
             const filterData = {
                 params:{
                     name: this.filter.name,
+                    category_id: this.filter.category_id,
                     status: this.filter.status,
                 }
             }
@@ -351,6 +360,7 @@ export default {
         },
         reloadData(){
             this.filter.name = '';
+            this.filter.category_id = '';
             this.filter.status = '';
             this.getData();
         }
@@ -358,6 +368,7 @@ export default {
     },
     // load data when mount component
     mounted() {
+        this.getCategoryList()
         this.getData()
     }
 }
