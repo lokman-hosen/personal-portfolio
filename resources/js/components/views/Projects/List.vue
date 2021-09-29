@@ -90,6 +90,8 @@
             </div>
             <!-- /.card-body -->
         </div>
+        <!-- set progressbar -->
+        <vue-progress-bar></vue-progress-bar>
 
         <!-- Button trigger modal -->
 
@@ -221,14 +223,17 @@ export default {
                     status: this.filter.status,
                 }
             }
-            axios.get('api/project?page='+this.pagination.current_page, filterData)
+            this.$Progress.start()
+            axios.get('api/projegfgfct?page='+this.pagination.current_page, filterData)
                 .then(response => {
                     this.projects = response.data.data;
                     this.pagination = response.data.meta;
+                    this.$Progress.finish()
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
+                    this.$Progress.fail()
                 });
         },
 

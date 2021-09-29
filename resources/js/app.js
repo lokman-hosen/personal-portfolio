@@ -10,6 +10,25 @@ require('./bootstrap');
 import Vue  from "vue";
 import App from "./App";
 import router from "./router";
+
+import VueProgressBar from 'vue-progressbar'
+
+const VueProgressBarOptions = {
+    color: '#bffaf3',
+    failedColor: '#874b4b',
+    thickness: '5px',
+    transition: {
+        speed: '0.2s',
+        opacity: '0.6s',
+        termination: 300
+    },
+    autoRevert: true,
+    location: 'top',
+    inverse: false
+}
+Vue.use(VueProgressBar, VueProgressBarOptions)
+
+
 // get login user id set in metaTag of master blade file
 Vue.prototype.$userId =$("meta[name='user-id']").attr('content');
 
