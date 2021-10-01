@@ -224,7 +224,7 @@ export default {
                 }
             }
             this.$Progress.start()
-            axios.get('api/projegfgfct?page='+this.pagination.current_page, filterData)
+            axios.get('api/project?page='+this.pagination.current_page, filterData)
                 .then(response => {
                     this.projects = response.data.data;
                     this.pagination = response.data.meta;

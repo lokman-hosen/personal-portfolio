@@ -2982,7 +2982,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       };
       this.$Progress.start();
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/projegfgfct?page=' + this.pagination.current_page, filterData).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/project?page=' + this.pagination.current_page, filterData).then(function (response) {
         _this.projects = response.data.data;
         _this.pagination = response.data.meta;
 
@@ -3316,10 +3316,8 @@ window.toast = Toast;
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_3__.default({
   el: '#app',
-  router: _router__WEBPACK_IMPORTED_MODULE_1__.default,
-  render: function render(h) {
-    return h(_App__WEBPACK_IMPORTED_MODULE_0__.default);
-  }
+  router: _router__WEBPACK_IMPORTED_MODULE_1__.default //render: h => h(App)
+
 });
 
 /***/ }),
