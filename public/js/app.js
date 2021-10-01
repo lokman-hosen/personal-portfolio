@@ -40374,7 +40374,7 @@ var render = function() {
     _c("div", { staticClass: "col-12" }, [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [
-          _c("h3", { staticClass: "card-title" }, [_vm._v("Category List")]),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-tools" }, [
             _c("div", { staticClass: "input-group input-group-sm pt-1 mr-2" }, [
@@ -40496,7 +40496,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "text-right" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -40516,7 +40516,7 @@ var render = function() {
             { staticClass: "table-responsive" },
             [
               _c("table", { staticClass: "table table-hover mt-2" }, [
-                _vm._m(1),
+                _vm._m(2),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -40801,6 +40801,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "card-title" }, [
+      _vm._v("Category List "),
+      _c("small", { staticClass: "text-muted" }, [
+        _vm._v("Server Side pagination with search")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "button",
       { staticClass: "btn btn-sm btn-primary p-1", attrs: { type: "submit" } },
@@ -40964,7 +40975,7 @@ var render = function() {
       _c("div", { staticClass: "col-12" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [_vm._v("Project List")]),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "card-tools" }, [
               _c(
@@ -41148,7 +41159,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "text-right" }, [
-                  _vm._m(0),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c(
                     "button",
@@ -41171,7 +41182,7 @@ var render = function() {
               { staticClass: "table-responsive" },
               [
                 _c("table", { staticClass: "table table-hover mt-2" }, [
-                  _vm._m(1),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -41247,7 +41258,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _vm.projects.length == 0
-                        ? _c("tr", [_vm._m(2)])
+                        ? _c("tr", [_vm._m(3)])
                         : _vm._e()
                     ],
                     2
@@ -41382,7 +41393,7 @@ var render = function() {
                       _c("div", { staticClass: "modal-body" }, [
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-6" }, [
-                            _vm._m(3),
+                            _vm._m(4),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -41428,7 +41439,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-6" }, [
-                            _vm._m(4),
+                            _vm._m(5),
                             _vm._v(" "),
                             _c(
                               "select",
@@ -41770,6 +41781,17 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "card-title" }, [
+      _vm._v("Project List "),
+      _c("small", { staticClass: "text-muted" }, [
+        _vm._v("Server Side pagination with search and progress bar")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

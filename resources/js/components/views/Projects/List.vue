@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Project List</h3>
+                    <h3 class="card-title">Project List <small class="text-muted">Server Side pagination with search and progress bar</small></h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm pt-1 mr-2">
                             <button type="button" class="btn btn-sm btn-info" @click="createModal"><i class="fa fa-plus"></i> Add New</button>
