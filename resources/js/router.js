@@ -4,6 +4,7 @@ import Dashboard from "./components/views/Dashboard";
 import User from "./components/views/User";
 import CategoryList from "./components/views/Category/List"
 import ProjectList from "./components/views/Projects/List"
+import ProjectImage from "./components/views/Projects/ProjectImage";
 
 
 Vue.use(Router)
@@ -28,6 +29,11 @@ const routes = [
         path: '/project',
         name: 'project',
         component: ProjectList
+    },
+    {
+        path: '/project-image',
+        name: 'project-image',
+        component: ProjectImage
     },
 ]
 

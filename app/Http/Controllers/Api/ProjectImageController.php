@@ -1,20 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ProjectImageCollection;
 use App\Models\ProjectImage;
+use App\Services\ProjectImageService;
+use App\Services\ProjectService;
 use Illuminate\Http\Request;
 
 class ProjectImageController extends Controller
 {
+
+    protected $service;
+    public function __construct(ProjectImageService $projectImageService){
+        $this->service = $projectImageService;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return new ProjectImageCollection($this->service->getPaginatedDate($request));
     }
 
     /**

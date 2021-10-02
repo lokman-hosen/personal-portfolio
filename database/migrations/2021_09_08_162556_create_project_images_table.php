@@ -16,6 +16,7 @@ class CreateProjectImagesTable extends Migration
         Schema::create('project_images', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('file');
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->text('description')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1=> active, 0=> inactive');

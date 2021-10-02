@@ -254,7 +254,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </ul>
                                         </li>-->
 
-                    <li class="nav-item menu-open">
+                    <li class="nav-item {{(Request::segment(1) == 'category' or Request::segment(1) == 'project') ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link {{(Request::segment(1) == 'category' or Request::segment(1) == 'project') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
@@ -273,6 +273,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <router-link to="/project" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Projects</p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/project-image" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Project Image</p>
                                 </router-link>
                             </li>
                         </ul>
