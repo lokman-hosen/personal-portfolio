@@ -41,4 +41,25 @@ class ProjectImageService extends BaseService
         return $query->latest()->paginate(10);
     }
 
+    public function saveProjectImage($request){
+        //upload file
+        if ($request->hasFile('file')){
+            $projectImage = $request->file('file');
+            $projectImageFileName = 'project'.time() . '.' . $projectImage->getClientOriginalExtension();
+            if (!file_exists('uploads/project')){
+                mkdir('uploads/project', 0777, true);
+            }
+            $projectImage->move('uploads/project', $projectImageFileName);
+        }else{
+            $projectImageFileName = 'default.png';
+        }
+
+       return $this->model->create([
+            'title' => $request->title,
+            'project_id' => $request->project_id,
+            'description' => $request->description,
+            'file' => $projectImageFileName,
+        ]);
+    }
+
 }

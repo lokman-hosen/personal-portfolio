@@ -105,7 +105,7 @@
                         <h5 class="modal-title" v-show="detailMode">View Project Image</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form v-if="!detailMode" @submit.prevent="editMode ? updateProjectImage() : saveProjectImage()">
+                    <form v-if="!detailMode" @submit.prevent="editMode ? updateProjectImage() : saveProjectImage()" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-6">
@@ -135,7 +135,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="file" class="form-label">Name <span class="text-danger">*</span></label>
-                                        <input type="file" id="file" class="form-control" name="file" >
+                                        <input type="file" id="file" class="form-control" name="file" @change="uploadFile">
                                         <div class="text-danger" v-if="form.errors.has('file')" v-html="form.errors.get('file')" />
                                     </div>
                                 </div>
@@ -217,7 +217,7 @@ export default {
         getData(){
             const filterData = {
                 params:{
-                    name: this.filter.name,
+                    title: this.filter.title,
                     project_id: this.filter.project_id,
                     status: this.filter.status,
                 }
@@ -263,6 +263,12 @@ export default {
             this.detailMode = true;
             $('#createModal').modal('show');
         },
+
+        uploadFile(e){
+            this.form.file = e.target.files[0];
+        },
+
+
 
         //  save record
         async saveProjectImage(){

@@ -44,7 +44,11 @@ class ProjectImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $projectImage = $this->service->saveProjectImage($request);
+
+        if ($projectImage){
+            return response()->json(['status' => true, 'data' => $projectImage, 'message' => 'Project Created']);
+        }
     }
 
     /**

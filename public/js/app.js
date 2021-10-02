@@ -3382,7 +3382,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var filterData = {
         params: {
-          name: this.filter.name,
+          title: this.filter.title,
           project_id: this.filter.project_id,
           status: this.filter.status
         }
@@ -3423,6 +3423,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.project = project;
       this.detailMode = true;
       $('#createModal').modal('show');
+    },
+    uploadFile: function uploadFile(e) {
+      this.form.file = e.target.files[0];
     },
     //  save record
     saveProjectImage: function saveProjectImage() {
@@ -42751,6 +42754,7 @@ var render = function() {
                 ? _c(
                     "form",
                     {
+                      attrs: { enctype: "multipart/form-data" },
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
@@ -42935,7 +42939,8 @@ var render = function() {
                                   type: "file",
                                   id: "file",
                                   name: "file"
-                                }
+                                },
+                                on: { change: _vm.uploadFile }
                               }),
                               _vm._v(" "),
                               _vm.form.errors.has("file")
