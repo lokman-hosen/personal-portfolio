@@ -17,7 +17,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" v-model="filter.name" id="name" placeholder="Enter Name">
+                                    <input type="text" class="form-control" v-model="filter.title" id="name" placeholder="Enter Name">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
@@ -49,6 +49,7 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Project</th>
                                 <th>Description</th>
@@ -59,6 +60,7 @@
                             <tbody>
                             <tr v-for="(projectImage, index) in projectImages" :key="projectImage.id">
                                 <td>{{pagination.from+index}}</td>
+                                <td><img :src="`uploads/project/${projectImage.file}`" style="width: 50px;"/></td>
                                 <td>{{projectImage.title}}</td>
                                 <td>{{projectImage.project.name}}</td>
                                 <td>{{projectImage.description}}</td>
@@ -72,7 +74,7 @@
                                     <a href="#" class="btn btn-sm btn-outline-success" title="View" @click="detailProject(projectImage)"><i class="fa fa-eye"></i> </a>
                                 </td>
                             </tr>
-                            <tr v-if="projectImages.length == 0"><td colspan="6"><p class="mb-0 text-center">No Data Found</p></td></tr>
+                            <tr v-if="projectImages.length == 0"><td colspan="7"><p class="mb-0 text-center">No Data Found</p></td></tr>
                             </tbody>
                         </table>
                         <!-- table end -->

@@ -30,7 +30,7 @@ class ProjectImageService extends BaseService
     {
         $query = $this->model->with('project:id,name');
         if (isset($request->title)){
-            $query = $query->where('title', 'like', '%'.$request->name.'%');
+            $query = $query->where('title', 'like', '%'.$request->title.'%');
         }
         if (isset($request->project_id)){
             $query = $query->where('project_id', $request->project_id);

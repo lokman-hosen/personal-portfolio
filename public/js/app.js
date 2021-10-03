@@ -3345,6 +3345,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -42415,8 +42417,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.filter.name,
-                            expression: "filter.name"
+                            value: _vm.filter.title,
+                            expression: "filter.title"
                           }
                         ],
                         staticClass: "form-control",
@@ -42425,13 +42427,13 @@ var render = function() {
                           id: "name",
                           placeholder: "Enter Name"
                         },
-                        domProps: { value: _vm.filter.name },
+                        domProps: { value: _vm.filter.title },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.filter, "name", $event.target.value)
+                            _vm.$set(_vm.filter, "title", $event.target.value)
                           }
                         }
                       })
@@ -42584,6 +42586,15 @@ var render = function() {
                         return _c("tr", { key: projectImage.id }, [
                           _c("td", [
                             _vm._v(_vm._s(_vm.pagination.from + index))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("img", {
+                              staticStyle: { width: "50px" },
+                              attrs: {
+                                src: "uploads/project/" + projectImage.file
+                              }
+                            })
                           ]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(projectImage.title))]),
@@ -43134,6 +43145,8 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("ID")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Image")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Project")]),
@@ -43150,7 +43163,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "6" } }, [
+    return _c("td", { attrs: { colspan: "7" } }, [
       _c("p", { staticClass: "mb-0 text-center" }, [_vm._v("No Data Found")])
     ])
   },

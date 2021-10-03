@@ -254,8 +254,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </ul>
                                         </li>-->
 
-                    <li class="nav-item {{(Request::segment(1) == 'category' or Request::segment(1) == 'project') ? 'menu-open' : ''}}">
-                        <a href="#" class="nav-link {{(Request::segment(1) == 'category' or Request::segment(1) == 'project') ? 'active' : ''}}">
+                    <li class="nav-item {{(Request::segment(1) == 'category' or Request::segment(1) == 'project' or Request::segment(1) == 'project-image' ) ? 'menu-open' : ''}}">
+                        <a href="#" class="nav-link {{(Request::segment(1) == 'category' or Request::segment(1) == 'project' or Request::segment(1) == 'project-image') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Projects
