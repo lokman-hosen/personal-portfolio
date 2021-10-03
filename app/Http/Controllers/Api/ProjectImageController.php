@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProjectImageRequest;
 use App\Http\Resources\ProjectImageCollection;
 use App\Models\ProjectImage;
 use App\Services\ProjectImageService;
@@ -42,10 +43,9 @@ class ProjectImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectImageRequest $request)
     {
         $projectImage = $this->service->saveProjectImage($request);
-
         if ($projectImage){
             return response()->json(['status' => true, 'data' => $projectImage, 'message' => 'Project Created']);
         }
@@ -80,9 +80,12 @@ class ProjectImageController extends Controller
      * @param  \App\Models\ProjectImage  $projectImage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProjectImage $projectImage)
+    public function update(ProjectImageRequest $request, ProjectImage $projectImage)
     {
-        //
+        $project = $this->service->updateProjectImage($request, $projectImage);
+        if ($project){
+            return response()->json(['status' => true,  'message' => 'Category Updated Successfully']);
+        }
     }
 
     /**
@@ -93,6 +96,11 @@ class ProjectImageController extends Controller
      */
     public function destroy(ProjectImage $projectImage)
     {
-        //
+        //delete old image if exist
+        if (file_exists('uploads/project/'.$projectImage->file)){
+            unlink('uploads/project/'.$projectImage->file);
+        }
+        $projectImage->delete();
+        return response()->json(['status' => true, 'message' => 'Project Image Deleted Successfully']);
     }
 }

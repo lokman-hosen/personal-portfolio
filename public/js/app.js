@@ -3347,6 +3347,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3374,7 +3382,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         status: ''
       },
       //detail
-      project: {}
+      projectImage: {}
     };
   },
   methods: {
@@ -3417,12 +3425,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.detailMode = false;
       this.editMode = true; //fill form with old data
 
-      this.form.fill(projectImage);
+      this.form.fill(projectImage); //this.form.file = '';
+
       $('#createModal').modal('show');
     },
     // project detail
-    detailProject: function detailProject(project) {
-      this.project = project;
+    detailProject: function detailProject(projectImage) {
+      console.log(projectImage);
+      this.projectImage = projectImage;
+      this.editMode = false;
       this.detailMode = true;
       $('#createModal').modal('show');
     },
@@ -43071,37 +43082,57 @@ var render = function() {
               _vm._v(" "),
               _vm.detailMode
                 ? _c("div", { staticClass: "modal-body" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("ul", { staticClass: "list-group list-group-flush" }, [
-                        _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v("Name: " + _vm._s(_vm.project.name))
+                    _c("div", { staticClass: "card mb-3" }, [
+                      _c("div", { staticClass: "row g-0" }, [
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c("img", {
+                            staticClass: "img-fluid rounded-start",
+                            attrs: {
+                              src: "uploads/project/" + _vm.projectImage.file,
+                              alt: "..."
+                            }
+                          })
                         ]),
                         _vm._v(" "),
-                        _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v("Project: " + _vm._s(_vm.project.project.name))
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v("Features: " + _vm._s(_vm.project.features))
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v(
-                            "Technologies: " + _vm._s(_vm.project.technologies)
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v("Company: " + _vm._s(_vm.project.company))
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v(
-                            "Status: " +
-                              _vm._s(
-                                _vm.project.status == 1 ? "Approved" : "Pending"
-                              )
-                          )
+                        _c("div", { staticClass: "col-md-8" }, [
+                          _c("div", { staticClass: "card-body" }, [
+                            _c(
+                              "ul",
+                              { staticClass: "list-group list-group-flush" },
+                              [
+                                _c("li", { staticClass: "list-group-item" }, [
+                                  _vm._v(
+                                    "Name: " + _vm._s(_vm.projectImage.title)
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", { staticClass: "list-group-item" }, [
+                                  _vm._v(
+                                    "Project: " +
+                                      _vm._s(_vm.projectImage.project.name)
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", { staticClass: "list-group-item" }, [
+                                  _vm._v(
+                                    "Description: " +
+                                      _vm._s(_vm.projectImage.description)
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", { staticClass: "list-group-item" }, [
+                                  _vm._v(
+                                    "Status: " +
+                                      _vm._s(
+                                        _vm.projectImage.status == 1
+                                          ? "Approved"
+                                          : "Pending"
+                                      )
+                                  )
+                                ])
+                              ]
+                            )
+                          ])
                         ])
                       ])
                     ])
@@ -43194,7 +43225,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", { staticClass: "form-label", attrs: { for: "file" } }, [
-      _vm._v("Name "),
+      _vm._v("Browse Image "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   }

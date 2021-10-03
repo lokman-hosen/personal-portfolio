@@ -62,4 +62,31 @@ class ProjectImageService extends BaseService
         ]);
     }
 
+
+    public function updateProjectImage($request, $projectImage){
+        //upload file
+        if ($request->hasFile('file')){
+            $projectImageFile = $request->file('file');
+            $projectImageFileName = 'project'.time() . '.' . $projectImageFile->getClientOriginalExtension();
+            if (!file_exists('uploads/project')){
+                mkdir('uploads/project', 0777, true);
+            }
+            //delete old image if exist
+            if (file_exists('uploads/project/'.$projectImage->file)){
+                unlink('uploads/project/'.$projectImage->file);
+            }
+            $projectImageFile->move('uploads/project', $projectImageFileName);
+        }else{
+            $projectImageFileName = $projectImage->file;
+        }
+       return $projectImage->update([
+            'title' => $request->title,
+            'project_id' => $request->project_id,
+            'description' => $request->description,
+            'file' => $projectImageFileName,
+            'status' => $request->status,
+        ]);
+
+    }
+
 }

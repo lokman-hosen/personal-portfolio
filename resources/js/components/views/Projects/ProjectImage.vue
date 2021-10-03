@@ -136,7 +136,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="file" class="form-label">Name <span class="text-danger">*</span></label>
+                                        <label for="file" class="form-label">Browse Image <span class="text-danger">*</span></label>
                                         <input type="file" id="file" class="form-control" name="file" @change="uploadFile">
                                         <div class="text-danger" v-if="form.errors.has('file')" v-html="form.errors.get('file')" />
                                     </div>
@@ -163,16 +163,24 @@
                     </form>
 
                     <div v-if="detailMode" class="modal-body">
-                        <div class="card">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Name: {{project.name}}</li>
-                                <li class="list-group-item">Project: {{project.project.name}}</li>
-                                <li class="list-group-item">Features: {{project.features}}</li>
-                                <li class="list-group-item">Technologies: {{project.technologies}}</li>
-                                <li class="list-group-item">Company: {{project.company}}</li>
-                                <li class="list-group-item">Status: {{project.status == 1 ? 'Approved' : 'Pending'}}</li>
-                            </ul>
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img :src="`uploads/project/${projectImage.file}`" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Name: {{projectImage.title}}</li>
+                                            <li class="list-group-item">Project: {{projectImage.project.name}}</li>
+                                            <li class="list-group-item">Description: {{projectImage.description}}</li>
+                                            <li class="list-group-item">Status: {{projectImage.status == 1 ? 'Approved' : 'Pending'}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -211,7 +219,7 @@ export default {
                 status: '',
             },
             //detail
-            project: {}
+            projectImage: {}
         }
     },
     methods:{
@@ -256,12 +264,15 @@ export default {
             this.editMode = true;
             //fill form with old data
             this.form.fill(projectImage);
+            //this.form.file = '';
             $('#createModal').modal('show');
         },
 
         // project detail
-        detailProject(project){
-            this.project = project;
+        detailProject(projectImage){
+            console.log(projectImage)
+            this.projectImage = projectImage;
+            this.editMode = false;
             this.detailMode = true;
             $('#createModal').modal('show');
         },
