@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectImageController;
+use App\Http\Controllers\Api\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,4 +24,5 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('category', CategoryController::class);
 Route::apiResource('project', ProjectController::class);
 Route::apiResource('project-image', ProjectImageController::class);
+Route::apiResource('tag', TagController::class);
 

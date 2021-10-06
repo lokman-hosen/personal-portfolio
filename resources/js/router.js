@@ -5,6 +5,7 @@ import User from "./components/views/User";
 import CategoryList from "./components/views/Category/List"
 import ProjectList from "./components/views/Projects/List"
 import ProjectImage from "./components/views/Projects/ProjectImage";
+import TagList from "./components/views/Tags/List"
 
 
 Vue.use(Router)
@@ -34,6 +35,11 @@ const routes = [
         path: '/project-image',
         name: 'project-image',
         component: ProjectImage
+    },
+    {
+        path: '/tag',
+        name: 'tag',
+        component: TagList
     },
 ]
 

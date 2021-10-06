@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use App\Services\TagService;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    protected $service;
+    public function __construct(TagService $tagService){
+        $this->service = $tagService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,14 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = $this->service->getPaginatedDate();
+        if ($tags){
+            return response()->json([
+                'status' => true,
+                'message' => 'Tag list',
+                'data' => $tags,
+            ]);
+        }
     }
 
     /**
