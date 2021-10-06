@@ -264,7 +264,7 @@ export default {
             this.editMode = true;
             //fill form with old data
             this.form.fill(projectImage);
-            //this.form.file = '';
+            this.form.file = '';
             $('#createModal').modal('show');
         },
 
