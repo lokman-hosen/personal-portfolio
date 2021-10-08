@@ -11,6 +11,8 @@ class TagController extends Controller
 {
     protected $service;
     public function __construct(TagService $tagService){
+        //dd(auth('api')->user());
+        $this->middleware('auth:api');
         $this->service = $tagService;
     }
     /**

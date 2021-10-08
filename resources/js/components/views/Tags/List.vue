@@ -131,8 +131,10 @@ export default {
                     this.$Progress.finish()
                 })
                 .catch(function (error) {
+                    //alert('sdfsdsdfsf')
                     // handle error
-                    console.log(error);
+                    console.log('lokman'+error);
+                    this.$router.push({ name: 'category' })
                     this.$Progress.fail()
                 });
         },

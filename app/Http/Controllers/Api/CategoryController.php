@@ -13,6 +13,7 @@ class CategoryController extends Controller
 {
     protected $service;
     public function __construct(CategoryService $categoryService){
+        $this->middleware('auth:api');
         $this->service = $categoryService;
     }
     /**

@@ -3716,8 +3716,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         _this.$Progress.finish();
       })["catch"](function (error) {
+        //alert('sdfsdsdfsf')
         // handle error
-        console.log(error);
+        console.log('lokman' + error);
+        this.$router.push({
+          name: 'category'
+        });
         this.$Progress.fail();
       });
     },

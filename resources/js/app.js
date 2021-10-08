@@ -29,6 +29,7 @@ const VueProgressBarOptions = {
 Vue.use(VueProgressBar, VueProgressBarOptions)
 
 
+
 // get login user id set in metaTag of master blade file
 Vue.prototype.$userId =$("meta[name='user-id']").attr('content');
 
