@@ -15,6 +15,7 @@ class ProjectController extends Controller
 {
     protected $service;
     public function __construct(ProjectService $projectService){
+        $this->middleware('auth:api');
         $this->service = $projectService;
     }
     /**

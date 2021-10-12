@@ -37,4 +37,18 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function checkLogin(){
+        if (auth('api')->check()){
+            return response()->json([
+                'status' => true,
+                'message' => 'Authenticated User',
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Not Authenticated',
+            ]);
+        }
+    }
 }

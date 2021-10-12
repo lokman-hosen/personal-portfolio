@@ -2485,6 +2485,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4083,14 +4084,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_views_Dashboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/views/Dashboard */ "./resources/js/components/views/Dashboard.vue");
 /* harmony import */ var _components_views_User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/views/User */ "./resources/js/components/views/User.vue");
 /* harmony import */ var _components_views_Category_List__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/views/Category/List */ "./resources/js/components/views/Category/List.vue");
 /* harmony import */ var _components_views_Projects_List__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/views/Projects/List */ "./resources/js/components/views/Projects/List.vue");
 /* harmony import */ var _components_views_Projects_ProjectImage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/views/Projects/ProjectImage */ "./resources/js/components/views/Projects/ProjectImage.vue");
 /* harmony import */ var _components_views_Tags_List__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/views/Tags/List */ "./resources/js/components/views/Tags/List.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
@@ -4099,38 +4102,78 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_6__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_7__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_7__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_8__.default);
 var routes = [{
   path: '/home',
   name: 'home',
-  component: _components_views_Dashboard__WEBPACK_IMPORTED_MODULE_0__.default
+  component: _components_views_Dashboard__WEBPACK_IMPORTED_MODULE_0__.default,
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/user',
   name: 'user',
-  component: _components_views_User__WEBPACK_IMPORTED_MODULE_1__.default
+  component: _components_views_User__WEBPACK_IMPORTED_MODULE_1__.default,
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/category',
   name: 'category',
-  component: _components_views_Category_List__WEBPACK_IMPORTED_MODULE_2__.default
+  component: _components_views_Category_List__WEBPACK_IMPORTED_MODULE_2__.default,
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/project',
   name: 'project',
-  component: _components_views_Projects_List__WEBPACK_IMPORTED_MODULE_3__.default
+  component: _components_views_Projects_List__WEBPACK_IMPORTED_MODULE_3__.default,
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/project-image',
   name: 'project-image',
-  component: _components_views_Projects_ProjectImage__WEBPACK_IMPORTED_MODULE_4__.default
+  component: _components_views_Projects_ProjectImage__WEBPACK_IMPORTED_MODULE_4__.default,
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/tag',
   name: 'tag',
-  component: _components_views_Tags_List__WEBPACK_IMPORTED_MODULE_5__.default
+  component: _components_views_Tags_List__WEBPACK_IMPORTED_MODULE_5__.default,
+  meta: {
+    requiresAuth: true
+  }
 }]; // keep it simple for now.
 
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_7__.default({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_8__.default({
   routes: routes,
   // short for `routes: routes`
   linkActiveClass: 'active',
   mode: 'history'
+});
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  })) {
+    axios__WEBPACK_IMPORTED_MODULE_6___default().get('api/check-login').then(function (response) {
+      console.log(response);
+
+      if (response.data.status) {
+        next();
+      } else {
+        next('/login');
+        location.reload();
+      }
+    })["catch"](function (error) {
+      // handle error
+      console.log(error);
+    });
+  } else {
+    next(); // does not require auth, make sure to always call next()!
+  }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
@@ -41240,6 +41283,8 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "card-tools" }, [
             _c("div", { staticClass: "input-group input-group-sm pt-1 mr-2" }, [
+              _c("a", { attrs: { href: "/login" } }, [_vm._v("Login")]),
+              _vm._v(" "),
               _c(
                 "button",
                 {

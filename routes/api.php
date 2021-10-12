@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectImageController;
 use App\Http\Controllers\Api\TagController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,8 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
+
+Route::get('/check-login', [LoginController::class, 'checkLogin']);
 Route::apiResource('category', CategoryController::class);
 Route::apiResource('project', ProjectController::class);
 Route::apiResource('project-image', ProjectImageController::class);

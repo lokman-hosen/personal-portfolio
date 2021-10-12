@@ -6,6 +6,7 @@
                     <h3 class="card-title">Category List <small class="text-muted">Server Side pagination with search</small></h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm pt-1 mr-2">
+                            <a href="/login">Login</a>
                             <button type="button" class="btn btn-sm btn-info" @click="createModal"><i class="fa fa-plus"></i> Add New</button>
                         </div>
                     </div>
