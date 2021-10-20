@@ -11,6 +11,11 @@ import Vue  from "vue";
 import App from "./App";
 import router from "./router";
 
+import store from './store/post'
+/*import Vuex from 'vuex'
+Vue.use(Vuex)*/
+
+
 import VueProgressBar from 'vue-progressbar'
 
 const VueProgressBarOptions = {
@@ -84,5 +89,6 @@ window.toast = Toast;
 const app = new Vue({
     el: '#app',
     router,
+    store,
     //render: h => h(App)
 });

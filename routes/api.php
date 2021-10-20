@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectImageController;
@@ -33,4 +34,5 @@ Route::apiResource('category', CategoryController::class);
 Route::apiResource('project', ProjectController::class);
 Route::apiResource('project-image', ProjectImageController::class);
 Route::apiResource('tag', TagController::class);
+Route::apiResource('posts', BlogController::class);
 

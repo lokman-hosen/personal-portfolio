@@ -7,6 +7,7 @@ import ProjectList from "./components/views/Projects/List"
 import ProjectImage from "./components/views/Projects/ProjectImage";
 import TagList from "./components/views/Tags/List"
 import axios from "axios";
+import PostList from "./components/views/Posts/PostList";
 
 
 Vue.use(Router)
@@ -58,6 +59,14 @@ const routes = [
         path: '/tag',
         name: 'tag',
         component: TagList,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/posts',
+        name: 'posts',
+        component: PostList,
         meta: {
             requiresAuth: true
         }
