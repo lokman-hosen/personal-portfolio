@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BlogRequest;
 use App\Http\Resources\BlogCollection;
 use App\Models\Blog;
 use App\Services\BlogService;
@@ -43,9 +44,13 @@ class BlogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogRequest $request)
     {
-        //
+       // dd($request->all());
+        $post = $this->service->saveBlog($request);
+        if ($post){
+            return response()->json(['status' => true, 'data' => $post, 'message' => 'Post Created']);
+        }
     }
 
     /**
