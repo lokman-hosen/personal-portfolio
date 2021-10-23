@@ -43,10 +43,21 @@ class BlogService extends BaseService
     }
 
     public function saveBlog($request){
+        //upload file
+        if ($request->hasFile('file')){
+            $blogImage = $request->file('file');
+            $blogImageFileName = 'blog'.time() . '.' . $blogImage->getClientOriginalExtension();
+            if (!file_exists('uploads/blog')){
+                mkdir('uploads/blog', 0777, true);
+            }
+            $blogImage->move('uploads/blog', $blogImageFileName);
+        }else{
+            $blogImageFileName = 'default.png';
+        }
        return $this->create([
             'title' => $request->title,
             'description' => $request->description,
-            'image' => 'default.png',
+            'image' => $blogImageFileName,
             'status' => 1,
         ]);
     }

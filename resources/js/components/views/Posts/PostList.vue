@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Project List <small class="text-muted">Server Side pagination with search and progress bar</small></h3>
+                    <h3 class="card-title">Post  List <small class="text-muted">Server Side pagination with search and progress bar</small></h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm pt-1 mr-2">
                             <button type="button" class="btn btn-sm btn-info" @click="createModal"><i class="fa fa-plus"></i> Add New</button>
@@ -26,8 +26,8 @@
                             </thead>
                             <tbody>
                             <tr v-for="(post, index) in posts" :key="post.id">
-                                <td>{{index}}</td>
-                                <td>image</td>
+                                <td>{{index+1}}</td>
+                                <td><img :src="`uploads/blog/${post.image}`" style="width: 40px;"/></td>
                                 <td>{{post.title}}</td>
                                 <td>{{post.description}}</td>
                                 <td>
@@ -73,7 +73,7 @@
                         <h5 class="modal-title" v-show="detailMode">View Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form v-if="!detailMode" @submit.prevent="editMode ? updateBlog() : saveBlog()">
+                    <form v-if="!detailMode" @submit.prevent="editMode ? updateBlog() : saveBlog()" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-12">
@@ -86,6 +86,13 @@
                                     <label class="form-label">Description</label>
                                     <input type="text" class="form-control" name="description" v-model="form.description" placeholder="Enter Blog Description">
                                     <div class="text-danger" v-if="form.errors.has('description')" v-html="form.errors.get('description')" />
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="file" class="form-label">Browse Image <span class="text-danger">*</span></label>
+                                        <input type="file" id="file" class="form-control" name="file" @change="uploadFile">
+                                        <div class="text-danger" v-if="form.errors.has('file')" v-html="form.errors.get('file')" />
+                                    </div>
                                 </div>
 
                                 <div v-if="editMode" class="col-6">
@@ -159,6 +166,12 @@ export default {
             this.$store.dispatch("getPosts")
         },
 
+        // upload file
+        uploadFile(e){
+            this.form.file = e.target.files[0];
+        },
+
+        // dave blog
         saveBlog(){
             this.$store.dispatch("savePost", this.form)
                 .then(() => {

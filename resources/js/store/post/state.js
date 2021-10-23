@@ -1,6 +1,6 @@
 export default {
     posts: [],
     pagination: {
-        current_page: 3,
+        current_page: 1,
     }
 }

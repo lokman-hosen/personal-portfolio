@@ -2863,6 +2863,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "PostList",
@@ -2904,6 +2911,11 @@ __webpack_require__.r(__webpack_exports__);
       //step 1: dispatch an action to get post
       this.$store.dispatch("getPosts");
     },
+    // upload file
+    uploadFile: function uploadFile(e) {
+      this.form.file = e.target.files[0];
+    },
+    // dave blog
     saveBlog: function saveBlog() {
       this.$store.dispatch("savePost", this.form).then(function () {
         toast.fire({
@@ -4502,8 +4514,10 @@ __webpack_require__.r(__webpack_exports__);
     state.posts = posts;
   },
   ADD_POST: function ADD_POST(state, post) {
-    console.log(state.posts.push(Object.assign({}, post)));
-    state.posts.push(Object.assign({}, post));
+    //assign to last position
+    //state.posts.push(Object.assign({}, post))
+    //assign to 1st position
+    state.posts.unshift(post);
   },
   // set pagination info in state
   SET_PAGE_NUMBER: function SET_PAGE_NUMBER(state, pagination) {
@@ -4540,7 +4554,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   posts: [],
   pagination: {
-    current_page: 3
+    current_page: 1
   }
 });
 
@@ -42355,9 +42369,14 @@ var render = function() {
                     [
                       _vm._l(_vm.posts, function(post, index) {
                         return _c("tr", { key: post.id }, [
-                          _c("td", [_vm._v(_vm._s(index))]),
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
                           _vm._v(" "),
-                          _c("td", [_vm._v("image")]),
+                          _c("td", [
+                            _c("img", {
+                              staticStyle: { width: "40px" },
+                              attrs: { src: "uploads/blog/" + post.image }
+                            })
+                          ]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(post.title))]),
                           _vm._v(" "),
@@ -42484,6 +42503,7 @@ var render = function() {
                 ? _c(
                     "form",
                     {
+                      attrs: { enctype: "multipart/form-data" },
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
@@ -42585,6 +42605,33 @@ var render = function() {
                                   }
                                 })
                               : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _vm._m(5),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "file",
+                                  id: "file",
+                                  name: "file"
+                                },
+                                on: { change: _vm.uploadFile }
+                              }),
+                              _vm._v(" "),
+                              _vm.form.errors.has("file")
+                                ? _c("div", {
+                                    staticClass: "text-danger",
+                                    domProps: {
+                                      innerHTML: _vm._s(
+                                        _vm.form.errors.get("file")
+                                      )
+                                    }
+                                  })
+                                : _vm._e()
+                            ])
                           ]),
                           _vm._v(" "),
                           _vm.editMode
@@ -42697,7 +42744,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h3", { staticClass: "card-title" }, [
-      _vm._v("Project List "),
+      _vm._v("Post  List "),
       _c("small", { staticClass: "text-muted" }, [
         _vm._v("Server Side pagination with search and progress bar")
       ])
@@ -42776,6 +42823,15 @@ var staticRenderFns = [
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "form-label", attrs: { for: "file" } }, [
+      _vm._v("Browse Image "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
   }
 ]
 render._withStripped = true

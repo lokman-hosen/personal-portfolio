@@ -46,7 +46,7 @@ class BlogController extends Controller
      */
     public function store(BlogRequest $request)
     {
-       // dd($request->all());
+        //dd($request->all());
         $post = $this->service->saveBlog($request);
         if ($post){
             return response()->json(['status' => true, 'data' => $post, 'message' => 'Post Created']);

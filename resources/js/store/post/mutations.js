@@ -5,9 +5,10 @@ export default {
     },
 
     ADD_POST (state, post) {
-        console.log(state.posts.push(Object.assign({}, post)))
-
-        state.posts.push(Object.assign({}, post))
+        //assign to last position
+        //state.posts.push(Object.assign({}, post))
+        //assign to 1st position
+        state.posts.unshift(post)
     },
     // set pagination info in state
     SET_PAGE_NUMBER(state, pagination){
