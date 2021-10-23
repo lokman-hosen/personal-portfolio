@@ -8,6 +8,9 @@ export default {
 
         state.posts.push(Object.assign({}, post))
     },
+    SET_PAGE_NUMBER(state, pagination){
+        state.pagination = pagination
+    }
     /*DELETE_POST(state, postId){
         const postIndex = state.posts.findIndex((post) => post.id === postId)
         state.posts.splice(postIndex, 1)

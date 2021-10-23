@@ -2915,6 +2915,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    //console.log('test'+this.$store.state.pagination.current_page);
     this.$store.dispatch("getPosts");
   }
 });
@@ -4397,12 +4398,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getPosts: function getPosts(_ref) {
-    var commit = _ref.commit;
+    var commit = _ref.commit,
+        state = _ref.state;
+    console.log(state.pagination.current_page);
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/posts") //// 4th step: commit mutation(called SET_MEMBERSHIPS)
+      //?page='+this.pagination.current_page
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/posts?page=".concat(state.pagination.current_page)) //// 4th step: commit mutation(called SET_MEMBERSHIPS)
       .then(function (response) {
-        console.log(response.data.data);
+        var pagination = response.data.meta; //console.log(pagination)
+
         commit('SET_POSTS', response.data.data);
+        commit('SET_PAGE_NUMBER', pagination);
         resolve(response);
       })["catch"](function (error) {
         reject(error);
@@ -4415,12 +4421,8 @@ __webpack_require__.r(__webpack_exports__);
       //alert('adadad');
       blog.post('api/posts').then(function (response) {
         if (response.data.status) {
-          //response = JSON.stringify(response.data.date)
-          //console.log(JSON.stringify(response.data.data))
           console.log(response.data.data);
-          var post = response.data.data; //console.log('saved'+ post)
-          //this.getData()
-
+          var post = response.data.data;
           commit('ADD_POST', post);
           resolve(response);
         }
@@ -4495,6 +4497,9 @@ __webpack_require__.r(__webpack_exports__);
   ADD_POST: function ADD_POST(state, post) {
     console.log(state.posts.push(Object.assign({}, post)));
     state.posts.push(Object.assign({}, post));
+  },
+  SET_PAGE_NUMBER: function SET_PAGE_NUMBER(state, pagination) {
+    state.pagination = pagination;
   }
   /*DELETE_POST(state, postId){
       const postIndex = state.posts.findIndex((post) => post.id === postId)
@@ -4525,7 +4530,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  posts: []
+  posts: [],
+  pagination: {
+    current_page: 3
+  }
 });
 
 /***/ }),

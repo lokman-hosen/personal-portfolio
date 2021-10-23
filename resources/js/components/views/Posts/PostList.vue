@@ -171,6 +171,7 @@ export default {
         }
     },
     mounted() {
+        //console.log('test'+this.$store.state.pagination.current_page);
         this.$store.dispatch("getPosts")
     }
 }

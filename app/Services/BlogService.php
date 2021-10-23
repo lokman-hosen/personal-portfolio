@@ -39,7 +39,7 @@ class BlogService extends BaseService
         if (isset($request->status)){
             $query = $query->where('status', $request->status);
         }
-        return $query->latest()->paginate(50);
+        return $query->latest()->paginate(10);
     }
 
     public function saveBlog($request){
