@@ -7,11 +7,11 @@ export default {
         return new Promise((resolve, reject) => {
                 //?page='+this.pagination.current_page
             axios.get(`api/posts?page=${state.pagination.current_page}`)
-                //// 4th step: commit mutation(called SET_MEMBERSHIPS)
                 .then((response) => {
                     const pagination = response.data.meta
-                    //console.log(pagination)
+                    //step 2: commit the mutation(SET_POSTS)
                     commit('SET_POSTS', response.data.data)
+                    //commit pagination info for further use
                     commit('SET_PAGE_NUMBER', pagination)
                     resolve(response)
                 })
@@ -20,7 +20,6 @@ export default {
     },
     savePost ({ commit }, blog) {
         return new Promise((resolve, reject) => {
-            //alert('adadad');
             blog.post('api/posts')
                 .then((response)=>{
                     if (response.data.status){

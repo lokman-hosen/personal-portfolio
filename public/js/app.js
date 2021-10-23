@@ -2855,6 +2855,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "PostList",
@@ -2892,16 +2900,15 @@ __webpack_require__.r(__webpack_exports__);
       this.form.reset();
       $('#createModal').modal('show');
     },
+    getData: function getData() {
+      //step 1: dispatch an action to get post
+      this.$store.dispatch("getPosts");
+    },
     saveBlog: function saveBlog() {
-      /*const blog = {
-          title: this.form.title,
-          description: this.form.description,
-          status: this.form.status,
-      }*/
       this.$store.dispatch("savePost", this.form).then(function () {
         toast.fire({
           icon: 'success',
-          title: 'Project Created successfully'
+          title: 'Post Created successfully'
         }); // reset form value
 
         $('.modal').on('hidden.bs.modal', function () {
@@ -2915,8 +2922,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    //console.log('test'+this.$store.state.pagination.current_page);
-    this.$store.dispatch("getPosts");
+    //this.$store.dispatch("getPosts")
+    this.getData();
   }
 });
 
@@ -4403,11 +4410,11 @@ __webpack_require__.r(__webpack_exports__);
     console.log(state.pagination.current_page);
     return new Promise(function (resolve, reject) {
       //?page='+this.pagination.current_page
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/posts?page=".concat(state.pagination.current_page)) //// 4th step: commit mutation(called SET_MEMBERSHIPS)
-      .then(function (response) {
-        var pagination = response.data.meta; //console.log(pagination)
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/posts?page=".concat(state.pagination.current_page)).then(function (response) {
+        var pagination = response.data.meta; //step 2: commit the mutation(SET_POSTS)
 
-        commit('SET_POSTS', response.data.data);
+        commit('SET_POSTS', response.data.data); //commit pagination info for further use
+
         commit('SET_PAGE_NUMBER', pagination);
         resolve(response);
       })["catch"](function (error) {
@@ -4418,7 +4425,6 @@ __webpack_require__.r(__webpack_exports__);
   savePost: function savePost(_ref2, blog) {
     var commit = _ref2.commit;
     return new Promise(function (resolve, reject) {
-      //alert('adadad');
       blog.post('api/posts').then(function (response) {
         if (response.data.status) {
           console.log(response.data.data);
@@ -4492,12 +4498,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   SET_POSTS: function SET_POSTS(state, posts) {
+    //step 3: update post array in state
     state.posts = posts;
   },
   ADD_POST: function ADD_POST(state, post) {
     console.log(state.posts.push(Object.assign({}, post)));
     state.posts.push(Object.assign({}, post));
   },
+  // set pagination info in state
   SET_PAGE_NUMBER: function SET_PAGE_NUMBER(state, pagination) {
     state.pagination = pagination;
   }
@@ -42335,43 +42343,64 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table table-hover mt-2" }, [
-                _vm._m(1),
+            _c(
+              "div",
+              { staticClass: "table-responsive" },
+              [
+                _c("table", { staticClass: "table table-hover mt-2" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    [
+                      _vm._l(_vm.posts, function(post, index) {
+                        return _c("tr", { key: post.id }, [
+                          _c("td", [_vm._v(_vm._s(index))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("image")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(post.title))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(post.description))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            post.status
+                              ? _c(
+                                  "span",
+                                  { staticClass: "badge bg-success" },
+                                  [_vm._v("Approved")]
+                                )
+                              : _c("span", { staticClass: "badge bg-danger" }, [
+                                  _vm._v("Pending")
+                                ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(2, true)
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _vm.posts.length == 0 ? _c("tr", [_vm._m(3)]) : _vm._e()
+                    ],
+                    2
+                  )
+                ]),
                 _vm._v(" "),
-                _c(
-                  "tbody",
-                  [
-                    _vm._l(_vm.posts, function(post, index) {
-                      return _c("tr", { key: post.id }, [
-                        _c("td", [_vm._v(_vm._s(index))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("image")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post.title))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post.description))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          post.status
-                            ? _c("span", { staticClass: "badge bg-success" }, [
-                                _vm._v("Approved")
-                              ])
-                            : _c("span", { staticClass: "badge bg-danger" }, [
-                                _vm._v("Pending")
-                              ])
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(2, true)
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _vm.posts.length == 0 ? _c("tr", [_vm._m(3)]) : _vm._e()
-                  ],
-                  2
-                )
-              ])
-            ])
+                this.$store.state.pagination.last_page > 1
+                  ? _c("pagination", {
+                      attrs: {
+                        pagination: this.$store.state.pagination,
+                        offset: 5
+                      },
+                      on: {
+                        paginate: function($event) {
+                          return _vm.getData()
+                        }
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
           ])
         ])
       ]),

@@ -44,6 +44,14 @@
                             </tbody>
                         </table>
                         <!-- table end -->
+
+                        <!-- pagination -->
+                        <pagination
+                            v-if="this.$store.state.pagination.last_page > 1"
+                            :pagination="this.$store.state.pagination"
+                            :offset="5"
+                            @paginate="getData()"
+                        ></pagination>
                     </div>
 
                 </div>
@@ -146,17 +154,17 @@ export default {
             $('#createModal').modal('show');
         },
 
+        getData(){
+            //step 1: dispatch an action to get post
+            this.$store.dispatch("getPosts")
+        },
+
         saveBlog(){
-            /*const blog = {
-                title: this.form.title,
-                description: this.form.description,
-                status: this.form.status,
-            }*/
             this.$store.dispatch("savePost", this.form)
                 .then(() => {
                     toast.fire({
                         icon: 'success',
-                        title: 'Project Created successfully'
+                        title: 'Post Created successfully'
                     })
                     // reset form value
                     $('.modal').on('hidden.bs.modal', function(){
@@ -171,8 +179,8 @@ export default {
         }
     },
     mounted() {
-        //console.log('test'+this.$store.state.pagination.current_page);
-        this.$store.dispatch("getPosts")
+        //this.$store.dispatch("getPosts")
+        this.getData()
     }
 }
 </script>

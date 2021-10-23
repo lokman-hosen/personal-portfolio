@@ -1,5 +1,6 @@
 export default {
     SET_POSTS(state, posts){
+        //step 3: update post array in state
         state.posts = posts
     },
 
@@ -8,6 +9,7 @@ export default {
 
         state.posts.push(Object.assign({}, post))
     },
+    // set pagination info in state
     SET_PAGE_NUMBER(state, pagination){
         state.pagination = pagination
     }
