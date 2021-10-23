@@ -82,9 +82,12 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
+    public function update(Request $request, $id)
     {
-        //
+        $post = $this->service->updatePost($request, $id);
+        if ($post) {
+            return response()->json(['status' => true, 'data' => $post, 'message' => 'Category Updated Successfully']);
+        }
     }
 
     /**

@@ -2881,6 +2881,7 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         title: '',
         description: '',
+        file: '',
         status: 1
       }),
       pagination: {
@@ -2921,6 +2922,34 @@ __webpack_require__.r(__webpack_exports__);
         toast.fire({
           icon: 'success',
           title: 'Post Created successfully'
+        }); // reset form value
+
+        $('.modal').on('hidden.bs.modal', function () {
+          $(this).find('form')[0].reset();
+        }); // hide the modal
+
+        $('#createModal').modal('hide');
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    },
+    //edit modal
+    editModal: function editModal(post) {
+      this.form.reset();
+      this.form.clear();
+      this.detailMode = false;
+      this.editMode = true; //fill form with old data
+
+      this.form.fill(post);
+      this.form.file = '';
+      $('#createModal').modal('show');
+    },
+    // update record
+    updateBlog: function updateBlog() {
+      this.$store.dispatch("editPost", this.form).then(function () {
+        toast.fire({
+          icon: 'success',
+          title: 'Blog Updated successfully'
         }); // reset form value
 
         $('.modal').on('hidden.bs.modal', function () {
@@ -4448,6 +4477,20 @@ __webpack_require__.r(__webpack_exports__);
         reject(error);
       });
     });
+  },
+  editPost: function editPost(_ref3, blog) {
+    var commit = _ref3.commit;
+    return new Promise(function (resolve, reject) {
+      blog.put('api/posts/' + blog.id).then(function (response) {
+        if (response.data.status) {
+          var post = response.data.data;
+          commit('EDIT_POST', post);
+          resolve(response);
+        }
+      })["catch"](function (error) {
+        reject(error);
+      });
+    });
   }
 });
 
@@ -4522,20 +4565,22 @@ __webpack_require__.r(__webpack_exports__);
   // set pagination info in state
   SET_PAGE_NUMBER: function SET_PAGE_NUMBER(state, pagination) {
     state.pagination = pagination;
-  }
+  },
+
   /*DELETE_POST(state, postId){
       const postIndex = state.posts.findIndex((post) => post.id === postId)
       state.posts.splice(postIndex, 1)
-  },
-  EDIT_POST(state, item){
-      state.posts = state.posts.map(post => {
-          if (post.id === item.id) {
-              return Object.assign({}, post, item)
-          }
-          return post
-      })
   },*/
+  EDIT_POST: function EDIT_POST(state, item) {
+    state.posts = state.posts.map(function (post) {
+      if (post.id == item.id) {
+        console.log('match' + post.id == item.id);
+        return Object.assign({}, post, item);
+      }
 
+      return post;
+    });
+  }
 });
 
 /***/ }),
@@ -42394,11 +42439,29 @@ var render = function() {
                                 ])
                           ]),
                           _vm._v(" "),
-                          _vm._m(2, true)
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-sm btn-outline-info",
+                                attrs: { href: "#", title: "Edit" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(post)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit" })]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(2, true),
+                            _vm._v(" "),
+                            _vm._m(3, true)
+                          ])
                         ])
                       }),
                       _vm._v(" "),
-                      _vm.posts.length == 0 ? _c("tr", [_vm._m(3)]) : _vm._e()
+                      _vm.posts.length == 0 ? _c("tr", [_vm._m(4)]) : _vm._e()
                     ],
                     2
                   )
@@ -42454,7 +42517,7 @@ var render = function() {
                     ],
                     staticClass: "modal-title"
                   },
-                  [_vm._v("Create Category")]
+                  [_vm._v("Create Blog")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -42470,7 +42533,7 @@ var render = function() {
                     ],
                     staticClass: "modal-title"
                   },
-                  [_vm._v("Edit Category")]
+                  [_vm._v("Edit Blog")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -42486,7 +42549,7 @@ var render = function() {
                     ],
                     staticClass: "modal-title"
                   },
-                  [_vm._v("View Category")]
+                  [_vm._v("View Blog")]
                 ),
                 _vm._v(" "),
                 _c("button", {
@@ -42515,7 +42578,7 @@ var render = function() {
                       _c("div", { staticClass: "modal-body" }, [
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-12" }, [
-                            _vm._m(4),
+                            _vm._m(5),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -42609,7 +42672,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "col-6" }, [
                             _c("div", { staticClass: "form-group" }, [
-                              _vm._m(5),
+                              _vm._m(6),
                               _vm._v(" "),
                               _c("input", {
                                 staticClass: "form-control",
@@ -42774,34 +42837,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-sm btn-outline-info",
-          attrs: { href: "#", title: "Edit" }
-        },
-        [_c("i", { staticClass: "fa fa-edit" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-sm btn-outline-danger",
-          attrs: { href: "#", title: "Delete" }
-        },
-        [_c("i", { staticClass: "fa fa-trash" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-sm btn-outline-success",
-          attrs: { href: "#", title: "View" }
-        },
-        [_c("i", { staticClass: "fa fa-eye" })]
-      )
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-sm btn-outline-danger",
+        attrs: { href: "#", title: "Delete" }
+      },
+      [_c("i", { staticClass: "fa fa-trash" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-sm btn-outline-success",
+        attrs: { href: "#", title: "View" }
+      },
+      [_c("i", { staticClass: "fa fa-eye" })]
+    )
   },
   function() {
     var _vm = this

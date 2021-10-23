@@ -35,7 +35,7 @@
                                     <span v-else class="badge bg-danger">Pending</span>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-outline-info" title="Edit" ><i class="fa fa-edit"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-info" title="Edit" @click="editModal(post)"><i class="fa fa-edit"></i> </a>
                                     <a href="#" class="btn btn-sm btn-outline-danger" title="Delete"><i class="fa fa-trash"></i> </a>
                                     <a href="#" class="btn btn-sm btn-outline-success" title="View"><i class="fa fa-eye"></i> </a>
                                 </td>
@@ -68,9 +68,9 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" v-show="!editMode && !detailMode">Create Category</h5>
-                        <h5 class="modal-title" v-show="editMode && !detailMode">Edit Category</h5>
-                        <h5 class="modal-title" v-show="detailMode">View Category</h5>
+                        <h5 class="modal-title" v-show="!editMode && !detailMode">Create Blog</h5>
+                        <h5 class="modal-title" v-show="editMode && !detailMode">Edit Blog</h5>
+                        <h5 class="modal-title" v-show="detailMode">View Blog</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form v-if="!detailMode" @submit.prevent="editMode ? updateBlog() : saveBlog()" enctype="multipart/form-data">
@@ -133,6 +133,7 @@ export default {
                 id: '',
                 title: '',
                 description: '',
+                file: '',
                 status: 1,
             }),
             pagination: {
@@ -189,7 +190,39 @@ export default {
                 .catch(err => {
                     console.error(err)
                 })
-        }
+        },
+
+        //edit modal
+        editModal(post){
+            this.form.reset();
+            this.form.clear();
+            this.detailMode = false;
+            this.editMode = true;
+            //fill form with old data
+            this.form.fill(post);
+            this.form.file = '';
+            $('#createModal').modal('show');
+        },
+
+        // update record
+        updateBlog(){
+            this.$store.dispatch("editPost", this.form)
+                .then(() => {
+                    toast.fire({
+                        icon: 'success',
+                        title: 'Blog Updated successfully'
+                    })
+                    // reset form value
+                    $('.modal').on('hidden.bs.modal', function(){
+                        $(this).find('form')[0].reset();
+                    });
+                    // hide the modal
+                    $('#createModal').modal('hide');
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+        },
     },
     mounted() {
         //this.$store.dispatch("getPosts")

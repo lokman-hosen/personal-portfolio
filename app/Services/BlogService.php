@@ -62,4 +62,32 @@ class BlogService extends BaseService
         ]);
     }
 
+    public function updatePost($request, $id){
+        $post = $this->model->find($id);
+        //upload file
+        if ($request->hasFile('file')){
+            $postImageFile = $request->file('file');
+            $postImageFileName = 'blog'.time() . '.' . $postImageFile->getClientOriginalExtension();
+            if (!file_exists('uploads/blog')){
+                mkdir('uploads/blog', 0777, true);
+            }
+            //delete old image if exist
+            if (file_exists('uploads/blog/'.$post->image)){
+                unlink('uploads/blog/'.$post->image);
+            }
+            $postImageFile->move('uploads/blog', $postImageFileName);
+        }else{
+            $postImageFileName = $post->image;
+        }
+
+        $post->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $postImageFileName,
+            'status' => $request->status,
+        ]);
+
+        return $this->model->find($id);
+    }
+
 }

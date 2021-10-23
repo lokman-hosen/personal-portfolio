@@ -33,4 +33,18 @@ export default {
         })
     },
 
+    editPost ({ commit }, blog) {
+        return new Promise((resolve, reject) => {
+            blog.put('api/posts/'+blog.id)
+                .then((response)=>{
+                    if (response.data.status){
+                        const post = response.data.data;
+                        commit('EDIT_POST', post)
+                        resolve(response)
+                    }
+                })
+                .catch((error) => { reject(error) })
+        })
+    },
+
 }
