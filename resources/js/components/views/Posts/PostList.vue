@@ -89,9 +89,9 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="file" class="form-label">Browse Image <span class="text-danger">*</span></label>
-                                        <input type="file" id="file" class="form-control" name="file" @change="uploadFile">
-                                        <div class="text-danger" v-if="form.errors.has('file')" v-html="form.errors.get('file')" />
+                                        <label for="image" class="form-label">Browse Image <span class="text-danger">*</span></label>
+                                        <input type="file" id="image" class="form-control" name="image" @change="uploadFile">
+                                        <div class="text-danger" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
                                     </div>
                                 </div>
 
@@ -133,7 +133,7 @@ export default {
                 id: '',
                 title: '',
                 description: '',
-                file: '',
+                image: '',
                 status: 1,
             }),
             pagination: {
@@ -167,9 +167,9 @@ export default {
             this.$store.dispatch("getPosts")
         },
 
-        // upload file
+        // upload image
         uploadFile(e){
-            this.form.file = e.target.files[0];
+            this.form.image = e.target.files[0];
         },
 
         // dave blog
@@ -200,7 +200,7 @@ export default {
             this.editMode = true;
             //fill form with old data
             this.form.fill(post);
-            this.form.file = '';
+            this.form.image = '';
             $('#createModal').modal('show');
         },
 

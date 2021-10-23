@@ -27,6 +27,8 @@ class BlogRequest extends FormRequest
         if (Request::isMethod('post')){
             return [
                 'title' => 'required',
+                'description' => 'required',
+                //'description' => 'required',
 
             ];
         }else{

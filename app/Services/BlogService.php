@@ -44,8 +44,8 @@ class BlogService extends BaseService
 
     public function saveBlog($request){
         //upload file
-        if ($request->hasFile('file')){
-            $blogImage = $request->file('file');
+        if ($request->hasFile('image')){
+            $blogImage = $request->file('image');
             $blogImageFileName = 'blog'.time() . '.' . $blogImage->getClientOriginalExtension();
             if (!file_exists('uploads/blog')){
                 mkdir('uploads/blog', 0777, true);
@@ -65,8 +65,8 @@ class BlogService extends BaseService
     public function updatePost($request, $id){
         $post = $this->model->find($id);
         //upload file
-        if ($request->hasFile('file')){
-            $postImageFile = $request->file('file');
+        if ($request->hasFile('image')){
+            $postImageFile = $request->file('image');
             $postImageFileName = 'blog'.time() . '.' . $postImageFile->getClientOriginalExtension();
             if (!file_exists('uploads/blog')){
                 mkdir('uploads/blog', 0777, true);

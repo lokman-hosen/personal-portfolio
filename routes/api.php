@@ -35,4 +35,5 @@ Route::apiResource('project', ProjectController::class);
 Route::apiResource('project-image', ProjectImageController::class);
 Route::apiResource('tag', TagController::class);
 Route::apiResource('posts', BlogController::class);
+Route::post('posts-update/{id}', [BlogController::class, 'updatePost']);
 

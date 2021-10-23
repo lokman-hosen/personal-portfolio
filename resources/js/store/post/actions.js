@@ -3,9 +3,7 @@ import Form from "vform";
 
 export default {
     getPosts ({ commit, state }) {
-        console.log(state.pagination.current_page);
         return new Promise((resolve, reject) => {
-                //?page='+this.pagination.current_page
             axios.get(`api/posts?page=${state.pagination.current_page}`)
                 .then((response) => {
                     const pagination = response.data.meta
@@ -23,7 +21,6 @@ export default {
             blog.post('api/posts')
                 .then((response)=>{
                     if (response.data.status){
-                        console.log(response.data.data)
                         const post = response.data.data;
                         commit('ADD_POST', post)
                         resolve(response)
@@ -34,8 +31,10 @@ export default {
     },
 
     editPost ({ commit }, blog) {
+        console.log(blog)
         return new Promise((resolve, reject) => {
-            blog.put('api/posts/'+blog.id)
+            //put method dont word if upload file so i used post method. If no need to upload file then can use put method(blog.put)
+            blog.post('api/posts-update/'+blog.id)
                 .then((response)=>{
                     if (response.data.status){
                         const post = response.data.data;

@@ -82,13 +82,14 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+   /* public function update(Request $request, $id)
     {
+        dd($request->all());
         $post = $this->service->updatePost($request, $id);
         if ($post) {
             return response()->json(['status' => true, 'data' => $post, 'message' => 'Category Updated Successfully']);
         }
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -99,5 +100,13 @@ class BlogController extends Controller
     public function destroy(Blog $blog)
     {
         //
+    }
+
+    public function updatePost(Request $request, $id){
+        $post = $this->service->updatePost($request, $id);
+        if ($post) {
+            return response()->json(['status' => true, 'data' => $post, 'message' => 'Category Updated Successfully']);
+        }
+
     }
 }

@@ -2881,7 +2881,7 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         title: '',
         description: '',
-        file: '',
+        image: '',
         status: 1
       }),
       pagination: {
@@ -2912,9 +2912,9 @@ __webpack_require__.r(__webpack_exports__);
       //step 1: dispatch an action to get post
       this.$store.dispatch("getPosts");
     },
-    // upload file
+    // upload image
     uploadFile: function uploadFile(e) {
-      this.form.file = e.target.files[0];
+      this.form.image = e.target.files[0];
     },
     // dave blog
     saveBlog: function saveBlog() {
@@ -2941,7 +2941,7 @@ __webpack_require__.r(__webpack_exports__);
       this.editMode = true; //fill form with old data
 
       this.form.fill(post);
-      this.form.file = '';
+      this.form.image = '';
       $('#createModal').modal('show');
     },
     // update record
@@ -4448,9 +4448,7 @@ __webpack_require__.r(__webpack_exports__);
   getPosts: function getPosts(_ref) {
     var commit = _ref.commit,
         state = _ref.state;
-    console.log(state.pagination.current_page);
     return new Promise(function (resolve, reject) {
-      //?page='+this.pagination.current_page
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/posts?page=".concat(state.pagination.current_page)).then(function (response) {
         var pagination = response.data.meta; //step 2: commit the mutation(SET_POSTS)
 
@@ -4468,7 +4466,6 @@ __webpack_require__.r(__webpack_exports__);
     return new Promise(function (resolve, reject) {
       blog.post('api/posts').then(function (response) {
         if (response.data.status) {
-          console.log(response.data.data);
           var post = response.data.data;
           commit('ADD_POST', post);
           resolve(response);
@@ -4480,8 +4477,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   editPost: function editPost(_ref3, blog) {
     var commit = _ref3.commit;
+    console.log(blog);
     return new Promise(function (resolve, reject) {
-      blog.put('api/posts/' + blog.id).then(function (response) {
+      //put method dont word if upload file so i used post method. If no need to upload file then can use put method(blog.put)
+      blog.post('api/posts-update/' + blog.id).then(function (response) {
         if (response.data.status) {
           var post = response.data.data;
           commit('EDIT_POST', post);
@@ -42678,18 +42677,18 @@ var render = function() {
                                 staticClass: "form-control",
                                 attrs: {
                                   type: "file",
-                                  id: "file",
-                                  name: "file"
+                                  id: "image",
+                                  name: "image"
                                 },
                                 on: { change: _vm.uploadFile }
                               }),
                               _vm._v(" "),
-                              _vm.form.errors.has("file")
+                              _vm.form.errors.has("image")
                                 ? _c("div", {
                                     staticClass: "text-danger",
                                     domProps: {
                                       innerHTML: _vm._s(
-                                        _vm.form.errors.get("file")
+                                        _vm.form.errors.get("image")
                                       )
                                     }
                                   })
@@ -42884,7 +42883,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "form-label", attrs: { for: "file" } }, [
+    return _c("label", { staticClass: "form-label", attrs: { for: "image" } }, [
       _vm._v("Browse Image "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
