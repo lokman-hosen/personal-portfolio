@@ -36,7 +36,7 @@
                                 </td>
                                 <td>
                                     <a href="#" class="btn btn-sm btn-outline-info" title="Edit" @click="editModal(post)"><i class="fa fa-edit"></i> </a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger" title="Delete"><i class="fa fa-trash"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-danger" title="Delete" @click="deletePost(post.id)"><i class="fa fa-trash"></i> </a>
                                     <a href="#" class="btn btn-sm btn-outline-success" title="View"><i class="fa fa-eye"></i> </a>
                                 </td>
                             </tr>
@@ -84,7 +84,7 @@
 
                                 <div class="col-12">
                                     <label class="form-label">Description</label>
-                                    <input type="text" class="form-control" name="description" v-model="form.description" placeholder="Enter Blog Description">
+                                    <textarea type="text" class="form-control" name="description" v-model="form.description" placeholder="Enter Blog Description"></textarea>
                                     <div class="text-danger" v-if="form.errors.has('description')" v-html="form.errors.get('description')" />
                                 </div>
                                 <div class="col-6">
@@ -222,6 +222,38 @@ export default {
                 .catch(err => {
                     console.error(err)
                 })
+        },
+
+        // delete record
+        deletePost(id){
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //delete item
+                    this.form.delete('api/project-image/'+id).then(()=>{
+                        swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        this.getData();
+                    })
+                        .catch(()=>{
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                            })
+                        })
+                }
+            })
         },
     },
     mounted() {

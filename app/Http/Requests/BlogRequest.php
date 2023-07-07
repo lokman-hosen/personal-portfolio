@@ -28,23 +28,16 @@ class BlogRequest extends FormRequest
             return [
                 'title' => 'required',
                 'description' => 'required',
-                //'description' => 'required',
-
+                'image' => 'required|image|mimes:jpg,bmp,png',
             ];
         }else{
             return [
-                'category_id' => 'required',
-                'name' => 'required',
+                'title' => 'required',
+                'description' => 'required',
                 'status' => 'required',
+                'image' => 'nullable|image|mimes:jpg,bmp,png',
             ];
         }
 
-    }
-
-    public function messages()
-    {
-        return [
-            'category_id.required' => 'The category field is required.',
-        ];
     }
 }

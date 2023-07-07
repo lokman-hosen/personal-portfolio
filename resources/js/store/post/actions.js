@@ -31,7 +31,6 @@ export default {
     },
 
     editPost ({ commit }, blog) {
-        console.log(blog)
         return new Promise((resolve, reject) => {
             //put method dont word if upload file so i used post method. If no need to upload file then can use put method(blog.put)
             blog.post('api/posts-update/'+blog.id)
